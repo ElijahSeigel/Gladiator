@@ -1,4 +1,5 @@
 //game control class
+//beta to develop character
 import Character from './character';
 import Collision from './collision';
 import Environment from './ENV';
@@ -12,12 +13,12 @@ export default class Game{
 		this. input = [];
 		
 		//this is the size of the displayed screen -> subject to change depending on env
-		this.width = 1000;
-		this.height = 500;
+		this.width = 2000;
+		this.height = 1000;
 		
 		//construct game entities and collision control
 		this.collisionControl = new Collision();
-		this.environment = new Environment(this.level);
+		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addENV(this.environment);
 		this.player = new Charachter (this.width/2, this.height/2, collisionControl);
 		this.collisionControl.addPlayer(this.player);
