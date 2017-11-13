@@ -18,7 +18,7 @@ export default class character{
 		
 		
 		//attack variables
-		this.moves = {punch: true, sword: false, spear: false, dash: false};
+		this.moves = {punch: true, sword: true, spear: true, dash: true};
 		this.attackAgain = 0;
 		
 		//initialize collisionController
@@ -67,19 +67,38 @@ export default class character{
 				}
 			}
 		}
+		
+		//Dash
+		if (this.attackAgain === 0 && this.moves.dash && input.includes("dash")){
+			this.invincible = 20;
+			this.attackAgain = 20;
+		}
+		
+		if(this.invincible >0){
+			this.invincible --;
+			if(this.direction === "right"){
+				if(!this.collisionController.checkENVCollision(this.positionVector.x + 3*this.velocityVector.x, this.positionVector.y, this.height, this.width)){
+					this.positionVector.x += 3*this.velocityVector.x;
+				}
+			}else{
+				if(!this.collisionController.checkENVCollision(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y, this.height, this.width)){
+					this.positionVector.x -= 3*this.velocityVector.x;
+				}
+			}
+		}
 
 		//attack some stuff
 		if(this.attackAgain === 0){
 			if(input.includes("punch") && this.moves.punch){
-				this.attackAgain = 70;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 20;//where 5 is the number of frames for the punch animation
 				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 50, this.direction, 25);//where 50 is the range of the attack and 25 is the damage done
 			}
 			else if(input.includes("sword") && this.moves.sword){
-				this.attackAgain = 90;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 40;//where 5 is the number of frames for the punch animation
 				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 100, this.direction, 50);//where 100 is the range of the attack and 50 is the damage done
 			}
 			else if(input.includes("spear") && this.moves.spear){
-				this.attackAgain = 110;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 60;//where 5 is the number of frames for the punch animation
 				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
