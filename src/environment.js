@@ -8,12 +8,12 @@ export default class Environment{
 		this.platforms = [];
 		//add platform coordinates
 		this.platforms.push({
-			x = 0,
-			y = 0,
-			width = 0,
-			height = 0
+			x = 50,
+			y = 50,
+			width = 10,
+			height = 10
 		});
-		this.floor = 100;// floor/bottom of the level
+		this.render = this.render.bind(this);
 	}
 	
 	render(ctx){
@@ -24,7 +24,7 @@ export default class Environment{
 			ctx.moveTo(block.x, block.y);
 			ctx.lineTo(block.x + block.width, block.y);
 			ctx.lineTo(block.x + block.width, block.y + block.height);
-			ctx.lineTo(block.x, block.y2 + block.height);
+			ctx.lineTo(block.x, block.y + block.height);
 			ctx.closePath();
 			ctx.fill();
 			ctx.restore();
