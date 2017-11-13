@@ -2,15 +2,20 @@
 
 export default class collision{
 	constructor(){
-		this.environment = null;
+		this.environment;
 	}
 
+  //set at beginning of each level
+	//env should be an array of polygons where a polygon is an array of points
 	addEnvironment(env){
 		this.environment = env;
 	}
 
-	addPlayer(player){
-		this.player = player;
+	playerEnvironmentCollides(point){
+		this.environment.forEach((polygon)=>{
+			if(pointInside(point, polygon)) return true;
+		});
+		return false;
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise
@@ -45,6 +50,7 @@ export default class collision{
 		//http://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
 	}
 
+  //checks if a point is in a given polygon (an array of points)
 	pointInside(point, polygonPoints){
 		var numPoints = polygonPoints.length;
 		if(numPoints < 3) {
@@ -65,4 +71,4 @@ export default class collision{
 		return (numIntersections%2 == 1);
 	}
 
-}//end collision
+}
