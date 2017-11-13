@@ -2,8 +2,8 @@
 
 export default class collision{
 	constructor(){
-		this.environment;
-		this.player;
+		this.environment = null;
+		this.player = null;
 		//TO DO: ADD AI
 		
 		//bind class functions
@@ -21,15 +21,16 @@ export default class collision{
 		this.addPlayer = plyr;
 	}//end addPlayer
 	
-	checkCollision(x,y, height, width){
-		this.environment.borders.foreach((boundry)=>{
+	checkENVCollision(x,y, height, width){
+		this.environment.borders.forEach((boundry)=>{
 			if(x < boundry.x + boundry.width &&
 			    x + width > boundry.x&&
 				y < boundry.y + boundry.height &&
 				y + height > boundry.y){
+					
 					return true;
 				}
 		});
-	}//end checkCollision
-	return false
+			return false;
+		}//end checkCollision
 }//end collision

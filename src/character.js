@@ -9,10 +9,10 @@ export default class character{
 		this.invincible = 0;
 		
 		//movement varaibles
-		this.positionVector = {x: xpos, y: pos};
-		this.movementSpeed = 5;
-		this.velocityVector = {x: this.movementSpeed, y: -1};
-		this.jumpValue = 5;
+		this.positionVector = {x: xpos, y: ypos};
+		this.movementSpeed = 10;
+		this.velocityVector = {x: this.movementSpeed, y: 1};
+		this.jumpValue = -20;
 		this.canJump = 1;
 		this.direction = "right";
 		
@@ -24,6 +24,10 @@ export default class character{
 		//initialize collisionController
 		this.collisionController = collisionClass;
 		
+		//bind class functions
+		this.update = this.update.bind(this);
+		this.render = this.render.bind(this);
+		
 	}//end constructor
 	
 	//update the character based on input
@@ -33,25 +37,26 @@ export default class character{
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = 0;
 		}
-		if(this.collisionController.checkCollision(this.positionVector.x, this.positionVector.y + this.velocityVector.y, this. height, this.width)){
+		//this.collisionController.checkENVCollision(this.positionVector.x, this.positionVector.y + this.velocityVector.y, this.height, this.width)
+		if(this.positionVector.y + this.velocityVector.y + this.height> 995){
 			this.canJump = 1;
-			this.velocityVector.y = -1;
+			this.velocityVector.y = 1;
 		}else{
 			this.positionVector.y += this.velocityVector.y;
-			this.velocityVector --;
+			this.velocityVector.y += 2;
 		}
 		
 		//move left or right
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
 				this.direction = "right";
-				if(this.collisionController.checkCollision(this.positionVector.x + this.velocityVector.x, this.positionVector.y, this. height, this.width)){
+				if(!this.collisionController.checkENVCollision(this.positionVector.x + this.velocityVector.x, this.positionVector.y, this.height, this.width)){
 					this.positionVector.x += this.velocityVector.x;
 				}
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
-				if(this.collisionController.checkCollision(this.positionVector.x - this.velocityVector.x, this.positionVector.y, this. height, this.width)){
+				if(!this.collisionController.checkENVCollision(this.positionVector.x - this.velocityVector.x, this.positionVector.y, this.height, this.width)){
 					this.positionVector.x -= this.velocityVector.x;
 				}
 			}

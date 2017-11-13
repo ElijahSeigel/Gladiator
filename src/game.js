@@ -10,7 +10,7 @@ export default class Game{
 		this.over = false;
 		this.level = 1;
 		this.paused = true;
-		this. input = [];
+		this.input = [];
 		
 		//this is the size of the displayed screen -> subject to change depending on env
 		this.width = 2000;
@@ -20,7 +20,7 @@ export default class Game{
 		this.collisionControl = new Collision();
 		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addENV(this.environment);
-		this.player = new Charachter (this.width/2, this.height/2, collisionControl);
+		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
 		this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		
@@ -49,6 +49,16 @@ export default class Game{
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
 		this.loop = this.loop.bind(this);
+		
+		// Set up event handlers
+		window.onkeydown = this.handleInput;
+		window.onkeyup = this.handleInput;
+		//initial render
+		this.render();
+	
+		// Start the game loop
+		this.interval = setInterval(this.loop, 60);
+		
 		
 	}//end constructor
 	
@@ -100,7 +110,7 @@ export default class Game{
 		map[e.keyCode] = e.type == 'keydown';
 		if(!this.paused){
 			if ((map[38])&& this.input.findIndex(function(i){return i=== 'jump'})=== -1 )//up
-			  this.input.push('forward');
+			  this.input.push('jump');
 			if ((map[37])&& this.input.findIndex(function(i){return i=== 'left'})=== -1 )//left
 			  this.input.push('left');
 			if ((map[39])&& this.input.findIndex(function(i){return i=== 'right'})=== -1 )//right
@@ -125,8 +135,8 @@ export default class Game{
 	
 	//function to update the game world
     update() {
-	  this.player.update(input);
-	  this.environment.update(this.player.positionVector);
+	  this.player.update(this.input);
+	  //this.environment.update(this.player.positionVector);
 	  //TO DO: ADD AI update
     }//end update	
 	
@@ -135,7 +145,7 @@ export default class Game{
     //render packground and write from the back buffer
 	this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
-    this.player.render(this.backBufferContext, this.input);
+    this.player.render(this.backBufferContext);
 	this.environment.render(this.backBufferContext);
 	//TO DO: ADD AI render
     this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);

@@ -8,7 +8,7 @@ export default class ENV{
 	}//end constructor
 	
 	render(ctx){
-		this.borders.ForEach((boundry)=>{
+		this.borders.forEach((boundry)=>{
 			ctx.save();
 			ctx.fillStyle = 'lime';
 			ctx.fillRect(boundry.x, boundry.y, boundry.width, boundry.height);

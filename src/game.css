@@ -7,8 +7,8 @@ body {
 }
 
 canvas {
-  width: 800px;
-  height: 800px;
+  width: 2000px;
+  height: 1000px;
   margin: 20px;
   border: 1px solid black;
   box-shadow: 5px 5px #777;
