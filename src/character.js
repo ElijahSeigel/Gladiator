@@ -12,7 +12,7 @@ export default class character{
 		this.positionVector = {x: xpos, y: ypos};
 		this.movementSpeed = 10;
 		this.velocityVector = {x: this.movementSpeed, y: 1};
-		this.jumpValue = -20;
+		this.jumpValue = -25;
 		this.canJump = 1;
 		this.direction = "right";
 		
@@ -32,8 +32,14 @@ export default class character{
 	
 	//update the character based on input
 	update(input){
+		//decrement attackAgain
+		if (this.attackAgain > 0)
+		{
+		this.attackAgain--;
+		}
+		
 		//jump and gravity stuff
-		if(this.canJump === 1 && input.includes("jump")){ // don't want to fall if initial jumping
+		if(this.attackAgain ===0 && this.canJump === 1 && input.includes("jump")){ // don't want to fall if initial jumping
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = 0;
 		}
@@ -63,7 +69,20 @@ export default class character{
 		}
 
 		//attack some stuff
-		//TO DO: ATTACK SOME STUFF
+		if(this.attackAgain === 0){
+			if(input.includes("punch") && this.moves.punch){
+				this.attackAgain = 70;//where 5 is the number of frames for the punch animation
+				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 50, this.direction, 25);//where 50 is the range of the attack and 25 is the damage done
+			}
+			else if(input.includes("sword") && this.moves.sword){
+				this.attackAgain = 90;//where 5 is the number of frames for the punch animation
+				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 100, this.direction, 50);//where 100 is the range of the attack and 50 is the damage done
+			}
+			else if(input.includes("spear") && this.moves.spear){
+				this.attackAgain = 110;//where 5 is the number of frames for the punch animation
+				this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
+			}
+		}
 		
 	}//end update
 	

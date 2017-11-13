@@ -10,7 +10,7 @@ export default class collision{
 		this.addENV = this.addENV.bind(this);
 		this.addPlayer = this.addPlayer.bind(this);
 		this.checkENVCollision = this.checkENVCollision.bind(this);
-		//TO DO: ADD CHECK HIT
+		this.checkHit = this.checkHit.bind(this);
 	}//end constructor
 	
 	addENV(env){
@@ -22,15 +22,10 @@ export default class collision{
 	}//end addPlayer
 	
 	checkENVCollision(x,y, height, width){
-		this.environment.borders.forEach((boundry)=>{
-			if(x < boundry.x + boundry.width &&
-			    x + width > boundry.x&&
-				y < boundry.y + boundry.height &&
-				y + height > boundry.y){
-					
-					return true;
-				}
-		});
 			return false;
-		}//end checkCollision
+		}//end checkENVCollision
+		
+	checkHit(x,y, range, direction, damage){
+		return false;
+	}	
 }//end collision

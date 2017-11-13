@@ -185,15 +185,15 @@ export default class Game{
 	  this.screenBufferContext.strokeText("Move left: left arrow", 20, 450);
 	  this.screenBufferContext.fillText("Punch: 'q' ", 20, 490);
 	  this.screenBufferContext.strokeText("Punch: 'q' ", 20, 490);
-	  if(this.player.moves[1]){
+	  if(this.player.moves.sword){
 		this.screenBufferContext.fillText("Stab: 'w' ", 20, 530);
 		this.screenBufferContext.strokeText("Stab: 'w' ", 20, 530);
 	  }
-	  if(this.player.moves[2]){
+	  if(this.player.moves.spear){
 		this.screenBufferContext.fillText("Impale: 'e' ", 20, 570);
 		this.screenBufferContext.strokeText("Impale: 'e' ", 20, 570);
 	  }
-	  if(this.player.moves[3]){
+	  if(this.player.moves.dash){
 		this.screenBufferContext.fillText("Dash: 'w' ", 20, 640);
 		this.screenBufferContext.strokeText("Dash: 'w' ", 20, 640);
 	  }
