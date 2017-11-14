@@ -19,9 +19,9 @@ export default class Game{
 		//construct game entities and collision control
 		this.collisionControl = new Collision();
 		this.environment = new Environment(this.height, this.width, this.level);
-		this.collisionControl.addENV(this.environment);
+		this.collisionControl.addEnvironment(this.environment.borders);
 		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
-		this.collisionControl.addPlayer(this.player);
+		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		
 		
@@ -101,7 +101,7 @@ export default class Game{
 				return i!== 'spear';  
 			  });
 			}
-			if (map2[32]){//r
+			if (map2[82]){//r
 			  this.input = this.input.filter(function(i){
 				return i!== 'dash';  
 			  });
@@ -121,7 +121,7 @@ export default class Game{
 			  this.input.push('sword');
 			if ((map[69])&& this.input.findIndex(function(i){return i=== 'spear'})=== -1 )//e
 			  this.input.push('spear');
-			if ((map[32])&& this.input.findIndex(function(i){return i=== 'dash'})=== -1 )//r
+			if ((map[82])&& this.input.findIndex(function(i){return i=== 'dash'})=== -1 )//r
 			  this.input.push('dash');
 			if (map[27])//esc
 			  this.paused=true;
@@ -194,8 +194,8 @@ export default class Game{
 		this.screenBufferContext.strokeText("Impale: 'e' ", 20, 570);
 	  }
 	  if(this.player.moves.dash){
-		this.screenBufferContext.fillText("Dash: 'w' ", 20, 640);
-		this.screenBufferContext.strokeText("Dash: 'w' ", 20, 640);
+		this.screenBufferContext.fillText("Dash: 'R' ", 20, 610);
+		this.screenBufferContext.strokeText("Dash: 'R' ", 20, 610);
 	  }
     }
 	//GUI overlay  
