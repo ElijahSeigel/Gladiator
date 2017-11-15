@@ -51,9 +51,9 @@ export default class character{
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = false;
 		}
-		//
+		
 		if(this.velocityVector.y>0){//send bottom
-			if(this.positionVector.y+this.height+this.velocityVector.y>995){//!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y + this.height) ){
+			if(this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y + this.height) ){
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{
@@ -61,14 +61,14 @@ export default class character{
 				this.velocityVector.y += 2;
 			}
 		}
-		/*else{
-			if(true){//!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y)){//send top
+		else{
+			if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y)){//send top
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;
 				this.velocityVector.y += 2;
 			}
-		}*/
+		}
 		
 		//move left or right
 		if(this.attackAgain===0){//don't want to move during attack
@@ -96,11 +96,11 @@ export default class character{
 		if(this.invincible >0){
 			this.invincible --;
 			if(this.direction === "right"){
-				if(true){ //!this.collisionController.checkENVCollision(this.positionVector.x + 3*this.velocityVector.x, this.positionVector.y, this.height, this.width)){
+				if(!this.collisionController.checkENVCollision(this.positionVector.x + 3*this.velocityVector.x +this.width , this.positionVector.y + this.height/2)){
 					this.positionVector.x += 10*this.velocityVector.x;
 				}
 			}else{
-				if(true){//!this.collisionController.checkENVCollision(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y, this.height, this.width)){
+				if(!this.collisionController.checkENVCollision(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y + this.height/2)){
 					this.positionVector.x -= 10*this.velocityVector.x;
 				}
 			}
