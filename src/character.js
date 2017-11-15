@@ -63,7 +63,7 @@ export default class character{
 			}
 		}
 		else{
-			if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y)){//send top
+			if(this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y)){//send top
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;
