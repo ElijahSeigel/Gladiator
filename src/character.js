@@ -1,6 +1,6 @@
 //character.js
-
-export default class character{
+import Collision from './collision';
+export default class Character{
 	constructor(xpos, ypos, collisionClass){
 		//initialize character variables
 		this.height = 200; //subject to change based on sprite
@@ -97,11 +97,11 @@ export default class character{
 		if(this.invincible >0){
 			this.invincible --;
 			if(this.direction === "right"){
-				if(!this.collisionController.checkENVCollision(this.positionVector.x + 3*this.velocityVector.x +this.width , this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x + 3*this.velocityVector.x +this.width , this.positionVector.y + this.height/2)){
 					this.positionVector.x += 10*this.velocityVector.x;
 				}
 			}else{
-				if(!this.collisionController.checkENVCollision(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y + this.height/2)){
 					this.positionVector.x -= 10*this.velocityVector.x;
 				}
 			}

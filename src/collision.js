@@ -1,6 +1,6 @@
 //collision.js
-
-export default class collision{
+import Environment from './ENV';
+export default class Collision{
 	constructor(){
 		this.environment;
 		
