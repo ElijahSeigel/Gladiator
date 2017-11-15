@@ -1,7 +1,7 @@
 //game control class
 //beta to develop character
 import Character from './character';
-import Collision from './collision';
+import CollisionController from './collision-controller';
 import Environment from './ENV';
 
 export default class Game{
@@ -11,20 +11,21 @@ export default class Game{
 		this.level = 1;
 		this.paused = true;
 		this.input = [];
-		
+
 		//this is the size of the displayed screen -> subject to change depending on env
 		this.width = 2000;
 		this.height = 1000;
-		
+
 		//construct game entities and collision control
-		this.collisionControl = new Collision();
+		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
+		//console.log(this.environment);
 		this.collisionControl.addEnvironment(this.environment.borders);
 		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
-		
-		
+
+
 		// Create the back buffer canvas
 		this.backBufferCanvas = document.createElement('canvas');
 		this.backBufferCanvas.width = this.width;
@@ -43,27 +44,27 @@ export default class Game{
 		message.id = "message";
 		message.textContent = "";
 		document.body.appendChild(message);
-		
+
 		//bind class functions
 		this.handleInput = this.handleInput.bind(this);
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
 		this.loop = this.loop.bind(this);
-		
+
 		// Set up event handlers
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
 		//initial render
 		this.render();
-	
+
 		// Start the game loop
 		this.interval = setInterval(this.loop, 60);
-		
-		
+
+
 	}//end constructor
-	
-	  //function which builds a list of input 
-	  //keeping track of what keys are currently being pressed 
+
+	  //function which builds a list of input
+	  //keeping track of what keys are currently being pressed
 	  //to allow for countinuous input from multiple keys
 	  handleInput(e) {
 		var map = {};
@@ -72,38 +73,38 @@ export default class Game{
 		if(!this.paused){
 			if (map2[38]){//up
 			  this.input = this.input.filter(function(i){
-				return i!== 'jump';  
+				return i!== 'jump';
 			  });
 			}
 			if (map2[37]){//left
 			  this.input = this.input.filter(function(i){
-				return i!== 'left';  
+				return i!== 'left';
 			  });
 			}
 
 			if (map2[39]){//right
 			  this.input = this.input.filter(function(i){
-				return i!== 'right';  
+				return i!== 'right';
 			  });
 			}
 			if (map2[81]){//q
 			  this.input = this.input.filter(function(i){
-				return i!== 'punch';  
+				return i!== 'punch';
 			  });
 			}
 			if (map2[87]){//w
 			  this.input = this.input.filter(function(i){
-				return i!== 'sword';  
+				return i!== 'sword';
 			  });
 			}
 			if (map2[69]){//e
 			  this.input = this.input.filter(function(i){
-				return i!== 'spear';  
+				return i!== 'spear';
 			  });
 			}
 			if (map2[82]){//r
 			  this.input = this.input.filter(function(i){
-				return i!== 'dash';  
+				return i!== 'dash';
 			  });
 			}
 		}
@@ -131,15 +132,15 @@ export default class Game{
 			  this.render();
 		}
 	  }//end handle input
-	  
-	
+
+
 	//function to update the game world
     update() {
 	  this.player.update(this.input);
 	  //this.environment.update(this.player.positionVector);
 	  //TO DO: ADD AI update
-    }//end update	
-	
+    }//end update
+
 	//render the game world
 	render() {
     //render packground and write from the back buffer
@@ -149,7 +150,7 @@ export default class Game{
 	this.environment.render(this.backBufferContext);
 	//TO DO: ADD AI render
     this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
-	
+
 	//display game over and message
 	if(this.over){
 	 this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
@@ -159,7 +160,7 @@ export default class Game{
      this.screenBufferContext.fillText("Game Over", 20, 200);
 	 this.screenBufferContext.strokeText("Game Over", 20, 200);
 	 }
-	//display paused screen and instructions  
+	//display paused screen and instructions
     if(this.paused && ! this.over){
 	  this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
       this.screenBufferContext.fillRect(0,0, this.width, this.height);
@@ -198,15 +199,15 @@ export default class Game{
 		this.screenBufferContext.strokeText("Dash: 'R' ", 20, 610);
 	  }
     }
-	//GUI overlay  
+	//GUI overlay
 	this.screenBufferContext.fillStyle = "white";
     this.screenBufferContext.font = '16px sans-serif';
     this.screenBufferContext.fillText("Lives: "+ this.player.lives, 10, this.height-5);
   }// end render
-  
-  
-  
-  
+
+
+
+
   //game loop, updates and renders each frame
   loop() {
 	if(!this.paused){
@@ -214,5 +215,5 @@ export default class Game{
       this.render();
 	}
   }//end loop
-   
+
 }//end game class

@@ -1,8 +1,8 @@
 //collision.js
 
-export default class collision{
+export default class CollisionController{
 	constructor(){
-		this.environment;
+		this.environment = [];
 	}
 
   //set at beginning of each level
@@ -12,8 +12,9 @@ export default class collision{
 	}
 
 	playerEnvironmentCollides(point){
+		console.log(this.environment);
 		this.environment.forEach((polygon)=>{
-			if(pointInside(point, polygon)) return true;
+			if(this.pointInside(point, polygon)) return true;
 		});
 		return false;
 	}
@@ -28,7 +29,7 @@ export default class collision{
   //does testPoint lie on ab (must be colinear)
 	onSegment(testPoint, a, b){
 		if(testPoint.x <= Math.max(a.x, b.x) && testPoint.x >= Math.min(a.x, b.x) &&
-			testPoint.y <= max(a.y, b.y) && testPoint.y >= min(a.y, b.y)){
+			testPoint.y <= Math.max(a.y, b.y) && testPoint.y >= Math.min(a.y, b.y)){
 			return true;
 		}
 		else {
@@ -38,10 +39,10 @@ export default class collision{
 
 	//do point a1b1 and a2b2 intersect?
 	doIntersect(a1, a2, b1, b2){
-		var oren1 = getOrientation(a1, b1, a2);
-		var oren2 = getOrientation(a1, b1, b2);
-		var oren3 = getOrientation(a2, b2, a1);
-		var oren4 = getOrientation(a2, b2, b1);
+		var oren1 = this.getOrientation(a1, b1, a2);
+		var oren2 = this.getOrientation(a1, b1, b2);
+		var oren3 = this.getOrientation(a2, b2, a1);
+		var oren4 = this.getOrientation(a2, b2, b1);
 
 		if (oren1 != oren2 && oren3 != oren4) return true;
 		return false;
@@ -61,9 +62,9 @@ export default class collision{
 		var numIntersections = 0;
 
 		for(var i = 0; i < numPoints-1; i++){
-			if(doIntersect(polygonPoints[i], polygonPoints[i+1], p, pointExtended)){
-				if(getOrientation(polygonPoints[i], p, polygonPoints[i+1])){
-					return onSegment(point, polygon[i], polygon[i+1]);
+			if(this.doIntersect(polygonPoints[i], polygonPoints[i+1], point, pointExtended)){
+				if(this.getOrientation(polygonPoints[i], point, polygonPoints[i+1])){
+					return this.onSegment(point, polygonPoints[i], polygonPoints[i+1]);
 				}
 				numIntersections++;
 			}

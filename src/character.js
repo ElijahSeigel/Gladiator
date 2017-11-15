@@ -1,6 +1,7 @@
 //character.js
+import CollisionController from './collision-controller';
 
-export default class character{
+export default class Character{
 	constructor(xpos, ypos, collisionClass){
 		//initialize character variables
 		this.height = 200; //subject to change based on sprite
@@ -8,7 +9,7 @@ export default class character{
 		this.health = 100;//subject to change
 		this.invincible = 0;
 		this.lives = 3;
-		
+
 		//movement varaibles
 		this.positionVector = {x: xpos, y: ypos};
 		this.movementSpeed = 10;
@@ -16,45 +17,45 @@ export default class character{
 		this.jumpValue = -25;
 		this.canJump = true;
 		this.direction = "right";
-		
-		
+
+
 		//attack variables
 		this.moves = {punch: true, sword: true, spear: true, dash: true};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
-		
+
 		//initialize collisionController
-		this.collisionController = collisionClass;
-		
+		this.collisionController = new CollisionController();
+
 		//bind class functions
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
-		
+
 	}//end constructor
-	
+
 	//update the character based on input
 	update(input){
-			
+
 		//decrement attackAgain
 		if (this.attackAgain > 0)
 		{
 		this.attackAgain--;
 		}
-		
+
 		//decrement dashAgain
 		if (this.dashAgain > 0)
 		{
 		this.dashAgain--;
 		}
-		
+
 		//jump and gravity stuff
 		if(this.attackAgain ===0 && this.canJump && input.includes("jump")){ // don't want to fall if initial jumping
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = false;
 		}
-		
+
 		if(this.velocityVector.y>0){//send bottom
-			if(this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y + this.height) ){
+			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height}) ){
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{
@@ -70,7 +71,7 @@ export default class character{
 				this.velocityVector.y += 2;
 			}
 		}
-		
+
 		//move left or right
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
@@ -86,14 +87,14 @@ export default class character{
 				}
 			}
 		}
-		
+
 		//Dash
 		if (input.includes("dash")&& this.moves.dash && this.dashAgain === 0 && this.attackAgain === 0){
 			this.invincible = 3;
 			this.attackAgain = 3;
 			this.dashAgain = 20;
 		}
-		
+
 		if(this.invincible >0){
 			this.invincible --;
 			if(this.direction === "right"){
@@ -122,9 +123,9 @@ export default class character{
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
-		
+
 	}//end update
-	
+
 	//render the character
 	render(ctx){
 		ctx.save();
@@ -132,5 +133,5 @@ export default class character{
 		ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
 		ctx.restore();
 	}//end render
-	
+
 }//end character
