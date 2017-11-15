@@ -7,6 +7,7 @@ export default class character{
 		this.width = 100; //subject to change based on sprite
 		this.health = 100;//subject to change
 		this.invincible = 0;
+		this.lives = 3;
 		
 		//movement varaibles
 		this.positionVector = {x: xpos, y: ypos};

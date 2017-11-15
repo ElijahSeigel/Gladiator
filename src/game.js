@@ -183,15 +183,15 @@ export default class Game{
       this.screenBufferContext.strokeText("Jump: up arrow", 20, 370);
 	  this.screenBufferContext.strokeText("Move right: right arrow", 20, 410);
 	  this.screenBufferContext.strokeText("Move left: left arrow", 20, 450);
-	  this.screenBufferContext.fillText("Punch: 'q' ", 20, 490);
-	  this.screenBufferContext.strokeText("Punch: 'q' ", 20, 490);
+	  this.screenBufferContext.fillText("Punch: 'Q' ", 20, 490);
+	  this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 490);
 	  if(this.player.moves.sword){
-		this.screenBufferContext.fillText("Stab: 'w' ", 20, 530);
-		this.screenBufferContext.strokeText("Stab: 'w' ", 20, 530);
+		this.screenBufferContext.fillText("Stab: 'W' ", 20, 530);
+		this.screenBufferContext.strokeText("Stab: 'W' ", 20, 530);
 	  }
 	  if(this.player.moves.spear){
-		this.screenBufferContext.fillText("Impale: 'e' ", 20, 570);
-		this.screenBufferContext.strokeText("Impale: 'e' ", 20, 570);
+		this.screenBufferContext.fillText("Impale: 'E' ", 20, 570);
+		this.screenBufferContext.strokeText("Impale: 'E' ", 20, 570);
 	  }
 	  if(this.player.moves.dash){
 		this.screenBufferContext.fillText("Dash: 'R' ", 20, 610);
@@ -201,7 +201,7 @@ export default class Game{
 	//GUI overlay  
 	this.screenBufferContext.fillStyle = "white";
     this.screenBufferContext.font = '16px sans-serif';
-    this.screenBufferContext.fillText("Lives: "+ this.lives, 10, this.height-5);
+    this.screenBufferContext.fillText("Lives: "+ this.player.lives, 10, this.height-5);
   }// end render
   
   
