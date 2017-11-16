@@ -25,7 +25,7 @@ export default class Character{
 		this.dashAgain = 0;
 
 		//initialize collisionController
-		this.collisionController = new CollisionController();
+		this.collisionController = collisionClass;
 
 		//bind class functions
 		this.update = this.update.bind(this);
@@ -55,7 +55,9 @@ export default class Character{
 		}
 
 		if(this.velocityVector.y>0){//send bottom
+			//console.log(stop);
 			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height}) ){
+				console.log('returned');
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{

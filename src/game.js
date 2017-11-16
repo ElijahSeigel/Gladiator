@@ -58,7 +58,7 @@ export default class Game{
 		this.render();
 
 		// Start the game loop
-		this.interval = setInterval(this.loop, 60);
+		this.interval = setInterval(this.loop, 100);
 
 
 	}//end constructor

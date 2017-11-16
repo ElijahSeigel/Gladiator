@@ -12,11 +12,13 @@ export default class CollisionController{
 	}
 
 	playerEnvironmentCollides(point){
-		console.log(this.environment);
+		var collision = false;
 		this.environment.forEach((polygon)=>{
-			if(this.pointInside(point, polygon)) return true;
+			if(this.pointInside(point, polygon)) {
+				collision = true;
+			}
 		});
-		return false;
+		return collision;
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise
@@ -64,7 +66,7 @@ export default class CollisionController{
 		for(var i = 0; i < numPoints-1; i++){
 			if(this.doIntersect(polygonPoints[i], polygonPoints[i+1], point, pointExtended)){
 				if(this.getOrientation(polygonPoints[i], point, polygonPoints[i+1])){
-					return this.onSegment(point, polygonPoints[i], polygonPoints[i+1]);
+					if(this.onSegment(point, polygonPoints[i], polygonPoints[i+1])) return true;
 				}
 				numIntersections++;
 			}
