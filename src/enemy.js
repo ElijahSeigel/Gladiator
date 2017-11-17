@@ -1,13 +1,13 @@
 //enemy.js
 
 export default class AI{
-	constructor(x,y){
+	constructor(x,y,radius){
 		this.position = {x: x, y: y};
 		//use width and height values for temporary rectangle
 		this.width = 5;
 		this.height = 10;
 		this.origin = x;
-		this.radius = 5;
+		this.patrol = radius;
 		this.direction = 1;
 		this.update = this.update.bind(this);
 	}
