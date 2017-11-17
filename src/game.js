@@ -3,6 +3,7 @@
 import Character from './character';
 import CollisionController from './collision-controller';
 import Environment from './ENV';
+import Enemy from './enemy'
 
 export default class Game{
 	constructor(){
@@ -19,9 +20,9 @@ export default class Game{
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
-		//console.log(this.environment);
 		this.collisionControl.addEnvironment(this.environment.borders);
 		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
+		this.enemy = new Enemy(300, 200, 80, 120, 'orange', 100, [])
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 
@@ -136,19 +137,21 @@ export default class Game{
 
 	//function to update the game world
     update() {
-	  this.player.update(this.input);
-	  //this.environment.update(this.player.positionVector);
-	  //TO DO: ADD AI update
+			this.player.update(this.input);
+			this.enemy.update(this.player.positionVector);
+			//this.environment.update(this.player.positionVector);
+			//TO DO: ADD AI update
     }//end update
 
 	//render the game world
 	render() {
     //render packground and write from the back buffer
-	this.backBufferContext.fillStyle = '#000';
+		this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
-    this.player.render(this.backBufferContext);
-	this.environment.render(this.backBufferContext);
-	//TO DO: ADD AI render
+		this.player.render(this.backBufferContext);
+		this.enemy.render(this.backBufferContext);
+		this.environment.render(this.backBufferContext);
+		//TO DO: ADD AI render
     this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
 	//display game over and message
