@@ -49,15 +49,16 @@ export default class Character{
 		}
 
 		//jump and gravity stuff
-		if(this.attackAgain ===0 && this.canJump && input.includes("jump")){ // don't want to fall if initial jumping
+		if(this.attackAgain === 0 && this.canJump && input.includes("jump")){ // don't want to fall if initial jumping
+			//console.log(this.velocityVector.y);
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = false;
+			//console.log(this.jumpValue);
 		}
 
 		if(this.velocityVector.y>0){//send bottom
 			//console.log(stop);
 			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height}) ){
-				console.log('returned');
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{
@@ -66,7 +67,7 @@ export default class Character{
 			}
 		}
 		else{
-			if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.width/2, this.positionVector.y + this.velocityVector.y)){//send top
+			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y})){//send top
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;
@@ -78,13 +79,13 @@ export default class Character{
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
 				this.direction = "right";
-				if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x + this.velocityVector.x + this.width, this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height/2})){
 					this.positionVector.x += this.velocityVector.x;
 				}
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
-				if(!this.collisionController.playerEnvironmentCollides(this.positionVector.x - this.velocityVector.x, this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height/2})){
 					this.positionVector.x -= this.velocityVector.x;
 				}
 			}
@@ -100,11 +101,11 @@ export default class Character{
 		if(this.invincible >0){
 			this.invincible --;
 			if(this.direction === "right"){
-				if(!this.collisionController.checkENVCollision(this.positionVector.x + 3*this.velocityVector.x +this.width , this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + 3*this.velocityVector.x +this.width , y: this.positionVector.y + this.height/2})){
 					this.positionVector.x += 10*this.velocityVector.x;
 				}
 			}else{
-				if(!this.collisionController.checkENVCollision(this.positionVector.x - 3*this.velocityVector.x, this.positionVector.y + this.height/2)){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - 3*this.velocityVector.x, y: this.positionVector.y + this.height/2})){
 					this.positionVector.x -= 10*this.velocityVector.x;
 				}
 			}
