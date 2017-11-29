@@ -12,12 +12,15 @@ export default class CollisionController{
 	}
 
 	playerEnvironmentCollides(point){
+		console.log(this.environment);
+		console.log(point);
 		var collision = false;
 		this.environment.forEach((polygon)=>{
 			if(this.pointInside(point, polygon)) {
 				collision = true;
 			}
 		});
+		//console.log(collision);
 		return collision;
 	}
 
