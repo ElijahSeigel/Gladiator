@@ -22,7 +22,7 @@ export default class Game{
 		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addEnvironment(this.environment.borders);
 		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
-		this.enemy = new Enemy(300, 200, 80, 120, 'orange', 100, [])
+		this.enemy = new Enemy(300, 200, 80, 120, 'orange', 100, ['U', 'R', 'D', 'L'], true, 20, 3)
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 
