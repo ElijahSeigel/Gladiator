@@ -13,15 +13,15 @@ export default class Game{
 		this.input = [];
 
 		//this is the size of the displayed screen -> subject to change depending on env
-		this.width = 2000;
-		this.height = 1000;
+		this.width = 1500;
+		this.height = 650;
 
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
 		//console.log(this.environment);
 		this.collisionControl.addEnvironment(this.environment.borders);
-		this.player = new Character (this.width/2, this.height/2, this.collisionControl);
+		this.player = new Character (1000, 100, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 

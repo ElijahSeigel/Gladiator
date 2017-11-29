@@ -3,7 +3,7 @@
 
 export default class ENV{
 	constructor(hght, wdth,level){
-		this.borders = [[{x: 0, y: hght-5}, {x:0, y:hght}, {x:wdth, y:hght-5}, {x:wdth, y:hght}]];
+		this.borders = [[{x: 0, y: 0}, {x: 0, y: 50}, {x: wdth, y: 50}, {x: wdth, y: 0}]];
 		this.render = this.render.bind(this);
 	}//end constructor
 
@@ -11,7 +11,7 @@ export default class ENV{
 		this.borders.forEach((boundry)=>{
 			ctx.save();
 			ctx.fillStyle = 'lime';
-			ctx.fillRect(0, 995, 1000, 5);
+			ctx.fillRect(50, 600, 1400, 50);
 			ctx.restore();
 		});
 	}

@@ -50,15 +50,13 @@ export default class Character{
 
 		//jump and gravity stuff
 		if(this.attackAgain === 0 && this.canJump && input.includes("jump")){ // don't want to fall if initial jumping
-			//console.log(this.velocityVector.y);
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = false;
 			//console.log(this.jumpValue);
 		}
 
 		if(this.velocityVector.y>0){//send bottom
-			//console.log(stop);
-			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height}) ){
+			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{
