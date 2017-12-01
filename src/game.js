@@ -21,7 +21,7 @@ export default class Game{
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addEnvironment(this.environment.borders);
-		this.enemy = new Enemy(300, 200, 80, 120, 'orange', 100, ['U', 'R', 'D', 'L'], true, 20, 3)
+		this.enemy = new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2) //(300, 200, 80, 120, 'orange', 100, ['U', 'R', 'D', 'L'], true, 20, 3)
 		this.player = new Character (1000, 100, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
@@ -67,7 +67,7 @@ export default class Game{
 	  //function which builds a list of input
 	  //keeping track of what keys are currently being pressed
 	  //to allow for countinuous input from multiple keys
-	  handleInput(e) {
+	handleInput(e) {
 		var map = {};
 		var map2 = {};
 		map2[e.keyCode] = e.type == 'keyup';
@@ -132,16 +132,16 @@ export default class Game{
 			  this.paused=false;
 			  this.render();
 		}
-	  }//end handle input
+	}//end handle input
 
 
 	//function to update the game world
-    update() {
+  update() {
 			this.player.update(this.input);
 			this.enemy.update(this.player.positionVector);
 			//this.environment.update(this.player.positionVector);
 			//TO DO: ADD AI update
-    }//end update
+  }//end update
 
 	//render the game world
 	render() {
@@ -154,69 +154,72 @@ export default class Game{
 		//TO DO: ADD AI render
     this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
-	//display game over and message
-	if(this.over){
-	 this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
-     this.screenBufferContext.fillRect(0,0, this.width, this.height);
-     this.screenBufferContext.fillStyle = "white";
-	 this.screenBufferContext.strokeStyle = "black";
-     this.screenBufferContext.fillText("Game Over", 20, 200);
-	 this.screenBufferContext.strokeText("Game Over", 20, 200);
-	 }
-	//display paused screen and instructions
+		//display game over and message
+		if(this.over){
+		this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillRect(0,0, this.width, this.height);
+			this.screenBufferContext.fillStyle = "white";
+		this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.fillText("Game Over", 20, 200);
+		this.screenBufferContext.strokeText("Game Over", 20, 200);
+		}
+		//display paused screen and instructions
     if(this.paused && ! this.over){
-	  this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
-      this.screenBufferContext.fillRect(0,0, this.width, this.height);
-      this.screenBufferContext.fillStyle = "white";
-	  this.screenBufferContext.strokeStyle = "black";
-      this.screenBufferContext.font = '40px sans-serif';
-	  this.screenBufferContext.fillText("Game Paused", 20, 200);
-	  this.screenBufferContext.strokeText("Game Paused", 20, 200);
-	  this.screenBufferContext.font = '30px sans-serif';
-      this.screenBufferContext.fillText("Press esc to resume", 20, 240);
-	  this.screenBufferContext.strokeText("Press esc to resume", 20, 240);
-	  this.screenBufferContext.font = '40px sans-serif';
-	  this.screenBufferContext.fillText("Instructions", 20, 290);
-	  this.screenBufferContext.strokeText("Instructions", 20, 290);
-	  this.screenBufferContext.font = '30px sans-serif';
-	  this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 330);
-	  this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 330);
-	  this.screenBufferContext.fillText("Jump: up arrow", 20, 370);
-	  this.screenBufferContext.fillText("Move right: right arrow", 20, 410);
-	  this.screenBufferContext.fillText("Move left: left arrow", 20, 450);
-      this.screenBufferContext.strokeText("Jump: up arrow", 20, 370);
-	  this.screenBufferContext.strokeText("Move right: right arrow", 20, 410);
-	  this.screenBufferContext.strokeText("Move left: left arrow", 20, 450);
-	  this.screenBufferContext.fillText("Punch: 'Q' ", 20, 490);
-	  this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 490);
-	  if(this.player.moves.sword){
-		this.screenBufferContext.fillText("Stab: 'W' ", 20, 530);
-		this.screenBufferContext.strokeText("Stab: 'W' ", 20, 530);
-	  }
-	  if(this.player.moves.spear){
-		this.screenBufferContext.fillText("Impale: 'E' ", 20, 570);
-		this.screenBufferContext.strokeText("Impale: 'E' ", 20, 570);
-	  }
-	  if(this.player.moves.dash){
-		this.screenBufferContext.fillText("Dash: 'R' ", 20, 610);
-		this.screenBufferContext.strokeText("Dash: 'R' ", 20, 610);
-	  }
-    }
-	//GUI overlay
-	this.screenBufferContext.fillStyle = "white";
-    this.screenBufferContext.font = '16px sans-serif';
-    this.screenBufferContext.fillText("Lives: "+ this.player.lives, 10, this.height-5);
-  }// end render
+			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillRect(0,0, this.width, this.height);
+			this.screenBufferContext.fillStyle = "white";
+			this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.font = '40px sans-serif';
+			this.screenBufferContext.fillText("Game Paused", 20, 200);
+			this.screenBufferContext.strokeText("Game Paused", 20, 200);
+			this.screenBufferContext.font = '30px sans-serif';
+			this.screenBufferContext.fillText("Press esc to resume", 20, 240);
+			this.screenBufferContext.strokeText("Press esc to resume", 20, 240);
+			this.screenBufferContext.font = '40px sans-serif';
+			this.screenBufferContext.fillText("Instructions", 20, 290);
+			this.screenBufferContext.strokeText("Instructions", 20, 290);
+			this.screenBufferContext.font = '30px sans-serif';
+			this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 330);
+			this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 330);
+			this.screenBufferContext.fillText("Jump: up arrow", 20, 370);
+			this.screenBufferContext.fillText("Move right: right arrow", 20, 410);
+			this.screenBufferContext.fillText("Move left: left arrow", 20, 450);
+			this.screenBufferContext.strokeText("Jump: up arrow", 20, 370);
+			this.screenBufferContext.strokeText("Move right: right arrow", 20, 410);
+			this.screenBufferContext.strokeText("Move left: left arrow", 20, 450);
+			this.screenBufferContext.fillText("Punch: 'Q' ", 20, 490);
+			this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 490);
+			if(this.player.moves.sword){
+				this.screenBufferContext.fillText("Stab: 'W' ", 20, 530);
+				this.screenBufferContext.strokeText("Stab: 'W' ", 20, 530);
+			}
+			if(this.player.moves.spear){
+				this.screenBufferContext.fillText("Impale: 'E' ", 20, 570);
+				this.screenBufferContext.strokeText("Impale: 'E' ", 20, 570);
+			}
+			if(this.player.moves.dash){
+				this.screenBufferContext.fillText("Dash: 'R' ", 20, 610);
+				this.screenBufferContext.strokeText("Dash: 'R' ", 20, 610);
+			}
+		}
+		//GUI overlay
+		this.screenBufferContext.fillStyle = "white";
+		this.screenBufferContext.font = '16px sans-serif';
+		this.screenBufferContext.fillText("Lives: "+ this.player.lives, 10, this.height-5);
+	}// end render
 
-
-
+	nextLevel() {
+		// call env method to change background
+		// place enemies
+		// change character location
+	}
 
   //game loop, updates and renders each frame
   loop() {
-	if(!this.paused){
-      this.update();
-      this.render();
-	}
+		if(!this.paused){
+				this.update();
+				this.render();
+		}
   }//end loop
 
 }//end game class
