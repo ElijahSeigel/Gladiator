@@ -54,9 +54,14 @@ export default class Character{
 			this.canJump = false;
 			//console.log(this.jumpValue);
 		}
-
+		var i; //temp variable for the loops
 		if(this.velocityVector.y>0){//send bottom
 			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+				/*for(i = this.velocityVector - 1; i>=0; i++){
+					if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+						this.positionVector.y += i;
+					}
+				}*/
 				this.canJump = true;
 				this.velocityVector.y = 1;
 			}else{
@@ -66,6 +71,12 @@ export default class Character{
 		}
 		else{
 			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y})){//send top
+				/*for(i = this.velocityVector + 1; i<=0; i++){
+					if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+						this.positionVector.y += i;
+					}
+				}*/
+				
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;

@@ -10,6 +10,10 @@ export default class CollisionController{
 	addEnvironment(env){
 		this.environment = env;
 	}
+	
+	pointInRectangle(){
+		
+	}
 
 	playerEnvironmentCollides(point){
 		console.log(this.environment);
