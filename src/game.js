@@ -9,7 +9,7 @@ export default class Game{
 	constructor(){
 		//initializing boring state variables
 		this.over = false;
-		this.level = 1;
+		this.level = -1;
 		this.paused = true;
 		this.input = [];
 
@@ -21,7 +21,32 @@ export default class Game{
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addEnvironment(this.environment.borders);
-		this.enemy = new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2) //(300, 200, 80, 120, 'orange', 100, ['U', 'R', 'D', 'L'], true, 20, 3)
+		
+		// Add enemies for 4 (tentative) levels
+		this.enemies = [
+			[], [], [], []
+		]
+		// Level 0 enemies
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		// Level 1 enemies
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		// Level 2 enemies
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		// Level 3 enemies
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+
 		this.player = new Character (1000, 100, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
@@ -55,12 +80,10 @@ export default class Game{
 		// Set up event handlers
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
-		//initial render
-		this.render();
 
 		// Start the game loop
+		this.nextLevel();
 		this.interval = setInterval(this.loop,20);
-
 
 	}//end constructor
 
@@ -138,7 +161,7 @@ export default class Game{
 	//function to update the game world
   update() {
 			this.player.update(this.input);
-			this.enemy.update(this.player.positionVector);
+			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
 			//TO DO: ADD AI update
   }//end update
@@ -149,7 +172,7 @@ export default class Game{
 		this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
 		this.player.render(this.backBufferContext);
-		this.enemy.render(this.backBufferContext);
+		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
 		this.environment.render(this.backBufferContext);
 		//TO DO: ADD AI render
     this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
@@ -209,8 +232,9 @@ export default class Game{
 	}// end render
 
 	nextLevel() {
+		this.level++;
+		console.log(this.level)
 		// call env method to change background
-		// place enemies
 		// change character location
 	}
 
