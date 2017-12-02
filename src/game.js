@@ -47,6 +47,37 @@ export default class Game{
 		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
 		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
 
+		this.maps = [
+			// Level Zero
+			[
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 1 ]
+			],
+			// Level One
+			[
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
+			],
+			// Level Two
+			[
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
+			],
+			// Level Three
+			[
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
+				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
+			],
+		]
+
 		this.player = new Character (1000, 100, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
@@ -81,6 +112,7 @@ export default class Game{
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
 
+		
 		// Start the game loop
 		this.nextLevel();
 		this.interval = setInterval(this.loop,20);
@@ -163,28 +195,39 @@ export default class Game{
 			this.player.update(this.input);
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
-			//TO DO: ADD AI update
   }//end update
 
 	//render the game world
 	render() {
-    //render packground and write from the back buffer
+		
 		this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
+		
+		this.maps[this.level].forEach((row, y) => {
+			row.forEach((tile, x) => {
+				var img = new Image();
+				img.src = "/tiles/tile_" + tile + ".png";
+				var tileWidth  = this.width  / row.length;
+				var tileHeight = this.height / this.maps.length;
+				console.log(y * tileHeight);
+				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+			})
+		})
+		
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
 		this.environment.render(this.backBufferContext);
-		//TO DO: ADD AI render
-    this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
+		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
+		
 		//display game over and message
 		if(this.over){
-		this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
 			this.screenBufferContext.fillRect(0,0, this.width, this.height);
 			this.screenBufferContext.fillStyle = "white";
-		this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.strokeStyle = "black";
 			this.screenBufferContext.fillText("Game Over", 20, 200);
-		this.screenBufferContext.strokeText("Game Over", 20, 200);
+			this.screenBufferContext.strokeText("Game Over", 20, 200);
 		}
 		//display paused screen and instructions
     if(this.paused && ! this.over){
@@ -240,6 +283,7 @@ export default class Game{
 
   //game loop, updates and renders each frame
   loop() {
+		if (this.level < 0) return;
 		if(!this.paused){
 				this.update();
 				this.render();
