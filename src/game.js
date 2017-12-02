@@ -53,6 +53,11 @@ export default class Game{
 				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
 				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
 				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
 				[ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 1 ]
 			],
 			// Level One
@@ -208,7 +213,7 @@ export default class Game{
 				var img = new Image();
 				img.src = "/tiles/tile_" + tile + ".png";
 				var tileWidth  = this.width  / row.length;
-				var tileHeight = this.height / this.maps.length;
+				var tileHeight = this.height / this.maps[this.level].length;
 				console.log(y * tileHeight);
 				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 			})
