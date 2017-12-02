@@ -5,7 +5,7 @@ export default class ENV{
 	constructor(hght, wdth,level){
 		this.height = hght;
 		this.width = wdth;
-		this.borders = [[{x: 0, y: hght}, {x: wdth, y:hght}, {x: 0, y: hght-50}, {x: wdth, y: hght-50}]];
+		this.borders = [[{x: 0, y: hght}, {x: wdth, y:hght}, {x: wdth, y: hght-50}, {x: 0, y: hght-50}]];
 		this.render = this.render.bind(this);
 	}//end constructor
 
