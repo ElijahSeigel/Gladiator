@@ -12,9 +12,13 @@ export default class CollisionController{
 	}
 
 	playerEnvironmentCollides(point){
-		console.log(this.environment);
-		console.log(point);
+		//console.log(this.environment);
+		//console.log(point);
 		var collision = false;
+		//test
+		point = {x: 10, y: 10};
+		this.environment = [[{x: 5, y: 5}, {x: 5, y: 15}, {x: 15, y: 15}, {x: 15, y: 5}]];
+		//endtest
 		this.environment.forEach((polygon)=>{
 			if(this.pointInside(point, polygon)) {
 				collision = true;
@@ -28,7 +32,8 @@ export default class CollisionController{
 	getOrientation(a, b, c){
 		var val = (b.y-a.y) * (c.x-b.x) - (b.x-a.x) * (c.y-b.y);
 		if(val == 0) return 0;
-		return (val > 0) ? 1 : 2;
+		if(val > 0) return 1;
+		return 2;
 	}
 
   //does testPoint lie on ab (must be colinear)
@@ -44,11 +49,13 @@ export default class CollisionController{
 
 	//do point a1b1 and a2b2 intersect?
 	doIntersect(a1, a2, b1, b2){
-		var oren1 = this.getOrientation(a1, b1, a2);
-		var oren2 = this.getOrientation(a1, b1, b2);
-		var oren3 = this.getOrientation(a2, b2, a1);
-		var oren4 = this.getOrientation(a2, b2, b1);
+		var oren1 = this.getOrientation(a1, a2, b1);
+		var oren2 = this.getOrientation(a1, a2, b2);
+		var oren3 = this.getOrientation(b1, b2, a1);
+		var oren4 = this.getOrientation(b1, b2, a2);
 
+
+		//console.log(oren1 != oren2 && oren3 != oren4);
 		if (oren1 != oren2 && oren3 != oren4) return true;
 		return false;
 
@@ -63,13 +70,15 @@ export default class CollisionController{
 			console.log('pointInside must receive a polygon (at least 3 points)!');
 			return false;
 		}
-		var pointExtended = {x: point.x + 1000, y: point.y};
+		var pointExtended = {x: point.x + 10000, y: point.y};
 		var numIntersections = 0;
 
-		for(var i = 0; i < numPoints-1; i++){
-			if(this.doIntersect(polygonPoints[i], polygonPoints[i+1], point, pointExtended)){
-				if(this.getOrientation(polygonPoints[i], point, polygonPoints[i+1])){
-					if(this.onSegment(point, polygonPoints[i], polygonPoints[i+1])) return true;
+		for(var i = 0; i < numPoints; i++){
+			var next = (i+1)%numPoints;
+			if(this.doIntersect(polygonPoints[i], polygonPoints[next], point, pointExtended)){
+				if(this.getOrientation(polygonPoints[i], point, polygonPoints[next]) == 0){
+					console.log("oriented");
+					return this.onSegment(point, polygonPoints[i], polygonPoints[next]);
 				}
 				numIntersections++;
 			}
