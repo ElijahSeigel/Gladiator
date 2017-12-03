@@ -16,8 +16,8 @@ export default class CollisionController{
 		//console.log(point);
 		var collision = false;
 		//test
-		point = {x: 10, y: 10};
-		this.environment = [[{x: 5, y: 5}, {x: 5, y: 15}, {x: 15, y: 15}, {x: 15, y: 5}]];
+		//point = {x: 10, y: 10};
+		//this.environment = [[{x: 5, y: 5}, {x: 5, y: 15}, {x: 15, y: 15}, {x: 15, y: 5}]];
 		//endtest
 		this.environment.forEach((polygon)=>{
 			if(this.pointInside(point, polygon)) {
@@ -77,12 +77,12 @@ export default class CollisionController{
 			var next = (i+1)%numPoints;
 			if(this.doIntersect(polygonPoints[i], polygonPoints[next], point, pointExtended)){
 				if(this.getOrientation(polygonPoints[i], point, polygonPoints[next]) == 0){
-					console.log("oriented");
 					return this.onSegment(point, polygonPoints[i], polygonPoints[next]);
 				}
 				numIntersections++;
 			}
 		}
+		console.log(numIntersections);
 		return (numIntersections%2 == 1);
 	}
 
