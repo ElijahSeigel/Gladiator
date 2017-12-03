@@ -11,21 +11,38 @@ export default class CollisionController{
 		this.environment = env;
 	}
 
-	playerEnvironmentCollides(point){
-		//console.log(this.environment);
-		//console.log(point);
+	pointInRectangle(){
+
+	}
+
+	playerEnvironmentCollides(point){		
 		var collision = false;
 		//test
 		point = {x: 2, y: 4};
 		this.env = [[{x: 0, y: 0}, {x: 0, y: 10}, {x: 10, y: 10}, {x: 10, y: 0}]];
 		//endtest
 		this.environment.forEach((polygon)=>{
-			if(this.pointInside(point, polygon)) {
+			/*if(this.pointInside(point, polygon)) {
 				collision = true;
-			}
+			}*/
+			//console.log(point);
+			//console.log(polygon);
+			//taken from https://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle
+			collision = !(this.areaRectangle(polygon[0], polygon[1], polygon[3]) < this.areaTriangle(point, polygon[0], polygon[1]) + this.areaTriangle(point, polygon[1], polygon[2]) + this.areaTriangle(point, polygon[2], polygon[3]) + this.areaTriangle(point, polygon[3], polygon[0]));
+
 		});
 		//console.log(collision);
 		return collision;
+
+	}
+
+	areaTriangle(pointA, pointB, pointC){
+		//taken from https://www.mathopenref.com/coordtrianglearea.html
+		return Math.abs((pointA.x*(pointB.y-pointC.y)+pointB.x*(pointC.y-pointA.y)+pointC.x*(pointA.y-pointB.y))/2);
+	}
+
+	areaRectangle(pointA, pointB, pointC){
+		return Math.abs(Math.sqrt(Math.pow((pointB.x-pointA.x),2)+Math.pow((pointB.y-pointA.y),2))*Math.sqrt(Math.pow((pointC.x-pointA.x),2)+Math.pow((pointC.y-pointA.y),2)));
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise
