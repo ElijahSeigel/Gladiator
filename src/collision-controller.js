@@ -82,8 +82,6 @@ export default class CollisionController{
 				numIntersections++;
 			}
 		}
-		console.log(numIntersections);
 		return (numIntersections%2 == 1);
 	}
-
 }

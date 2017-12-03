@@ -21,7 +21,7 @@ export default class Game{
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
 		this.collisionControl.addEnvironment(this.environment.borders);
-		
+
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
 			[], [], [], []
@@ -117,10 +117,10 @@ export default class Game{
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
 
-		
+
 		// Start the game loop
 		this.nextLevel();
-		this.interval = setInterval(this.loop,20);
+		this.interval = setInterval(this.loop, 30);
 
 	}//end constructor
 
@@ -204,27 +204,27 @@ export default class Game{
 
 	//render the game world
 	render() {
-		
+
 		this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
-		
+
 		this.maps[this.level].forEach((row, y) => {
 			row.forEach((tile, x) => {
 				var img = new Image();
 				img.src = "/tiles/tile_" + tile + ".png";
 				var tileWidth  = this.width  / row.length;
 				var tileHeight = this.height / this.maps[this.level].length;
-				console.log(y * tileHeight);
+				//console.log(y * tileHeight);
 				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 			})
 		})
-		
+
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
 		this.environment.render(this.backBufferContext);
 
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
-		
+
 		//display game over and message
 		if(this.over){
 			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
@@ -281,7 +281,7 @@ export default class Game{
 
 	nextLevel() {
 		this.level++;
-		console.log(this.level)
+		//console.log(this.level)
 		// call env method to change background
 		// change character location
 	}
