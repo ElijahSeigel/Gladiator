@@ -76,7 +76,7 @@ export default class Character{
 						this.positionVector.y += i;
 					}
 				}
-				
+
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;
@@ -111,14 +111,14 @@ export default class Character{
 			this.invincible --;
 			if(this.direction === "right"){
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + 10*this.velocityVector.x +this.width , y: this.positionVector.y + this.height/2})){
-					
+
 					this.positionVector.x += 10*this.velocityVector.x;
 				}else{
 					for(i = this.velocityVector.x*10 - 1; i>0; i--){
 						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i , y: this.positionVector.y + this.height/2})){
 							this.positionVector.x += i;
 						}
-					}	
+					}
 				}
 			}else{
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - 10*this.velocityVector.x, y: this.positionVector.y + this.height/2})){
@@ -128,7 +128,7 @@ export default class Character{
 						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i , y: this.positionVector.y + this.height/2})){
 							this.positionVector.x -= i;
 						}
-					}	
+					}
 				}
 			}
 		}
