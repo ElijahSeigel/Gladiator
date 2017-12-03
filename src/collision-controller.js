@@ -11,9 +11,9 @@ export default class CollisionController{
 		this.environment = env;
 	}
 	
-	pointInRectangle(){
+	/*pointInRectangle(){
 		
-	}
+	}*/
 
 	playerEnvironmentCollides(point){		
 		var collision = false;
