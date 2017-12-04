@@ -10,7 +10,7 @@ export default class ENV{
 										[{x: 0, y: hght-60}, {x: 0, y: hght - 100}, {x: wdth/2, y: hght-100}, {x:wdth/2, y: hght-60}]];
 		this.render = this.render.bind(this);
 		this.objectController = new ObjectController();
-		this.objectController.newObject('potion', 100, 100);
+		this.objectController.newObject('potion', 300, 300);
 	}//end constructor
 
 	render(ctx){
@@ -20,10 +20,8 @@ export default class ENV{
 			ctx.fillRect(0, this.height, this.width, -50);
 			ctx.fillRect(0, this.height-60, this.width/2, -40);
 			ctx.restore();
-
 			this.objectController.render(ctx);
 		});
-
 	}
 
 }//end environment
