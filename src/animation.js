@@ -11,16 +11,16 @@
     constructor(path, name, rate, looping) {
       // Load the sprite images
       this.images = [];
-      for(var i = 0; i < 5; i++) {
+      for(var i = 0; i < 7; i++) {
         let image = new Image();
         // Dynamically calculate the size of the final sprite
         // using a height of 120px and the aspect ratio of the
         // source images.
-        this.height = 120;
+        this.height = 100;
         image.onload = () => {
           this.width = 120 * image.width/image.height;
         }
-        image.src = `${path}/${name}_00${i}.png`;
+        image.src = `${path}/${name}/${name}_00${i}.png`;
         this.images.push(image);
       }
       this.frame = 0;
@@ -56,7 +56,10 @@
       * @param {float} y - the y position of the sprite
       */
     render(ctx, x, y) {
-      if(this.images[this.frame])
-        ctx.drawImage(this.images[this.frame], x, y, this.width, this.height);
+      console.log(1)
+      if(this.images[this.frame]) {
+        console.log(this.images)
+        ctx.drawImage(this.images[this.frame], x - this.width/2, y + this.height + 10, this.width, this.height);
+      }
     }
   }
