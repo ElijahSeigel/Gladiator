@@ -1,4 +1,5 @@
 // enemy.js
+import Sprite from './sprite'
 
 export default class Enemy {
     constructor(xPos, yPos, width, height, type, awarenessRadius, movementPattern, mirrorMovement, framesPerStep, movementSpeed) {
@@ -15,6 +16,8 @@ export default class Enemy {
 
         this.frames = 0;
         this.mirrored = false;
+        this.sprite = new Sprite(type);
+        this.sprite.setState('walk');
     }
     update(characterPosition) {
         var characterDistanceSquared = Math.pow((characterPosition.x - this.position.x), 2) + Math.pow((characterPosition.y - this.position.y), 2)
@@ -52,12 +55,9 @@ export default class Enemy {
                 this.mirrored = this.mirrorMovement ? !this.mirrored : false
             }
         }
+        this.sprite.update();
     }
     render(ctx) {
-        // render a square in place of the enemy for now
-        ctx.save();
-        ctx.fillStyle = this.type;
-        ctx.fillRect(this.position.x - this.width/2, this.position.y - this.height/2, this.width, this.height);
-        ctx.restore();
+        this.sprite.render(ctx, this.position.x, this.position.y);
     }
 }

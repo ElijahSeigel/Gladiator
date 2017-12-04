@@ -11,13 +11,13 @@ export default class Sprite {
   constructor(name) {
     // Create the animation for the sprite
     this.animations = {
-      'idle': new Animation('sprites/' + name, `_IDLE`, 4, true),
-      'walk': new Animation('sprites/' + name, `_WALK`, 2, true),
-      'run': new Animation('sprites/' + name, `_RUN`, 1, true),
-      'jump': new Animation('sprites/' + name, `_JUMP`, 1, false),
-      'attack': new Animation('sprites/' + name, `_ATTACK`, 1, false),
-      'hurt': new Animation('sprites/' + name, `_HURT`, 1, false),
-      'die': new Animation('sprites/' + name, `_DIE`, 1, false)
+      'idle': new Animation('sprites/' + name, `IDLE`, 4, true),
+      'walk': new Animation('sprites/' + name, `WALK`, 2, true),
+      'run': new Animation('sprites/' + name, `RUN`, 1, true),
+      'jump': new Animation('sprites/' + name, `JUMP`, 1, false),
+      'attack': new Animation('sprites/' + name, `ATTACK`, 1, false),
+      'hurt': new Animation('sprites/' + name, `HURT`, 1, false),
+      'die': new Animation('sprites/' + name, `DIE`, 1, false)
     }
     this.state = 'idle';
   }
@@ -44,7 +44,6 @@ export default class Sprite {
     * @param {float} y - the y position of the sprite
     */
   render(ctx, x, y) {
-    console.log('hello');
     this.animations[this.state].render(ctx, x, y);
   }
 }
