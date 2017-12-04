@@ -1,5 +1,6 @@
 //character.js
 import CollisionController from './collision-controller';
+import Sprite from './sprite';
 
 export default class Character{
 	constructor(xpos, ypos, collisionClass){
@@ -17,7 +18,7 @@ export default class Character{
 		this.jumpValue = -25;
 		this.canJump = true;
 		this.direction = "right";
-
+		this.sprite = new Sprite('3_KNIGHT');
 
 		//attack variables
 		this.moves = {punch: true, sword: true, spear: true, dash: true};
@@ -36,23 +37,17 @@ export default class Character{
 	//update the character based on input
 	update(input){
 
-		//decrement attackAgain
-		if (this.attackAgain > 0)
-		{
-		this.attackAgain--;
-		}
+		var stateSet = false;
+		//decrement cooldowns
+		if (this.attackAgain > 0) this.attackAgain--;
+		if (this.dashAgain > 0) this.dashAgain--;
 
-		//decrement dashAgain
-		if (this.dashAgain > 0)
-		{
-		this.dashAgain--;
-		}
-
-		//jump and gravity stuff
+		//jump and gravity
 		if(this.attackAgain === 0 && this.canJump && input.includes("jump")){ // don't want to fall if initial jumping
 			this.velocityVector.y = this.jumpValue;
 			this.canJump = false;
-			//console.log(this.jumpValue);
+			this.sprite.setState('jump');
+			stateSet = true;
 		}
 		var i; //temp variable for the loops
 		if(this.velocityVector.y>0){//send bottom
@@ -90,12 +85,16 @@ export default class Character{
 				this.direction = "right";
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height/2})){
 					this.positionVector.x += this.velocityVector.x;
+					this.sprite.setState('run');
+					stateSet = true;
 				}
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height/2})){
 					this.positionVector.x -= this.velocityVector.x;
+					this.sprite.setState('run');
+					stateSet = true;
 				}
 			}
 		}
@@ -148,14 +147,14 @@ export default class Character{
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
-
+		if (!stateSet && this.canJump) this.sprite.setState('idle');
+		this.sprite.update();
 	}//end update
 
 	//render the character
 	render(ctx){
 		ctx.save();
-		ctx.fillStyle = 'red';
-		ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
+		this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
 		ctx.restore();
 	}//end render
 
