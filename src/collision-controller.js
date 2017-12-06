@@ -40,7 +40,9 @@ export default class CollisionController{
 	
 	playerHitsEnemy(point, dmg){
 		this.enemies.forEach((enemy)=>{
-			if(this.pointInside(point, [enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y}, {x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height}, {x:enemy.position.x,y: enemy.position.y + height})) {
+			if(this.pointInside(point, [ enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y},
+					{x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height},
+					{x:enemy.position.x,y: enemy.position.y + enemy.height} ])) {
 				enemy.health -= dmg;
 				console.log('hit');
 			}
