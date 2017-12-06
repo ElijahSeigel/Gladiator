@@ -37,11 +37,13 @@ export default class Tilemap {
   }
 
   render(ctx) {
-    for(let y = 0; y < this.mapHeight; y++) {
-      for(let x = 0; x < this.mapWidth; x++) {
+    for(let y = 0; y <= this.mapHeight; y++) {
+      for(let x = 0; x <= this.mapWidth; x++) {
         var tileIndex = this.data[y * this.mapWidth + x];
-        if(tileIndex === 0) continue; // Skip non-existant tiles
+        if(tileIndex === 0 || tileIndex === undefined) continue; // Skip non-existant tiles
+        console.log(x,y,tileIndex);
         var tile = this.tiles[tileIndex];
+        console.log(tileIndex, this.tiles, tile)
         if(!tile.image) continue; // Don't draw a non-existant image
         ctx.drawImage(
           // The source image
