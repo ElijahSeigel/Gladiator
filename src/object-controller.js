@@ -6,6 +6,7 @@ export default class ObjectController {
     this.objects =
       {
         'dashAbility': {
+          'id': 'dash',
           'distance': 10,
           'img': 'health.png'
         },
@@ -54,6 +55,16 @@ export default class ObjectController {
       'x': x,
       'y': y,
     });
+  }
+
+  removeObject(id){
+    var index;
+    for(var i = 0; i < this.exists.length; i++){
+      if(this.exists[0]['properties']['id'] == id){
+        index = i;
+      }
+    }
+    this.exists.splice(index, 1);
   }
 
   render(ctx) {

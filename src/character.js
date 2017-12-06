@@ -10,6 +10,7 @@ export default class Character{
 		this.health = 100;//subject to change
 		this.invincible = 0;
 		this.lives = 3;
+		this.objectController;
 
 		//movement varaibles
 		this.positionVector = {x: xpos, y: ypos};
@@ -34,16 +35,20 @@ export default class Character{
 
 	}//end constructor
 
+	addObjectController(controller){
+		this.objectController = controller;
+	}
+
 	applyObject(id){
+		this.objectController.removeObject(id);
 		switch(id) {
-			case 'dashAbility':
+			case 'dash':
 				this.moves['dash'] = true;
 		}
 	}
 
 	//update the character based on input
 	update(input){
-
 		var stateSet = false;
 		//decrement cooldowns
 		if (this.attackAgain > 0) this.attackAgain--;
@@ -159,9 +164,10 @@ export default class Character{
 		if (!stateSet && this.canJump) this.sprite.setState('idle');
 		this.sprite.update();
 
-		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y});
+		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x - this.width/2, y: this.positionVector.y + this.height/2 + 20});
 		if(objectCollidesId){
-			console.log('got object!');
+			//console.log(objectCollidesId);
+			this.applyObject(objectCollidesId);
 		}
 	}//end update
 

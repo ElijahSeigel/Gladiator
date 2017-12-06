@@ -10,7 +10,8 @@ export default class ENV{
 										[{x: 0, y: hght-60}, {x: 0, y: hght - 100}, {x: wdth/2, y: hght-100}, {x:wdth/2, y: hght-60}]];
 	  this.objectController = new ObjectController();
 		this.render = this.render.bind(this);
-		this.objectController.newObject('dashAbility', 300, 300);
+		this.objectController.newObject('dashAbility', 300, 500);
+		this.objects = this.objectController.exists;
 	}//end constructor
 
 	render(ctx){

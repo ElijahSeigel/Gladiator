@@ -2,6 +2,7 @@
 //beta to develop character
 import Character from './character';
 import CollisionController from './collision-controller';
+import ObjectController from './object-controller';
 import Environment from './ENV';
 import Enemy from './enemy'
 
@@ -20,7 +21,9 @@ export default class Game{
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
+		this.objectController = new ObjectController();
 		this.collisionControl.addEnvironment(this.environment.borders);
+		this.collisionControl.addObjects(this.environment.objects);
 
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
@@ -31,11 +34,11 @@ export default class Game{
 		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2))
 		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2))
 		// Level 1 enemies
-		
+
 		// Level 2 enemies
-		
+
 		// Level 3 enemies
-		
+
 
 		this.maps = [
 			// Level Zero
@@ -74,6 +77,7 @@ export default class Game{
 		]
 
 		this.player = new Character (1000, 100, this.collisionControl);
+		this.player.addObjectController(this.environment.objectController);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 

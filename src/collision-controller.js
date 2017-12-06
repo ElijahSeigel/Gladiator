@@ -17,9 +17,17 @@ export default class CollisionController{
 	}
 
 	playerObjectCollides(point){
+		var id = false;
 		this.objects.forEach((object) => {
-			console.log(object);
+			//console.log(object);
+			var x = object.x;
+			var y = object.y;
+			if(Math.abs(point.x - object.x) < 40 && Math.abs(point.y - object.y) < 40){
+				//console.log('grab object;');
+				id = object.properties.id;
+			}
 		});
+		return id;
 	}
 
 	playerEnvironmentCollides(point){
