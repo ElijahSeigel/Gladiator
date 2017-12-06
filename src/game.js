@@ -31,7 +31,9 @@ export default class Game{
 		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2))
 		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2))
 		// Level 1 enemies
-		
+		this.enemies[1].push(new Enemy(218, 166, 20, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
+		this.enemies[1].push(new Enemy(1059, 166, 20, 20, 'ork1', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
+		this.enemies[1].push(new Enemy(714, 452, 20, 20, 'ork1', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
 		
 		// Level 3 enemies
@@ -40,7 +42,7 @@ export default class Game{
 		this.player = new Character (1370, 420, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
-
+		this.collisionControl.addPlayer(this.player);
 
 		// Create the back buffer canvas
 		this.backBufferCanvas = document.createElement('canvas');
@@ -74,7 +76,11 @@ export default class Game{
 
 		// Start the game loop
 		this.nextLevel();
+		this.collisionControl.addEnemies(this.enemies[this.level]);
 		this.interval = setInterval(this.loop, 30);
+		
+		
+		
 
 	}//end constructor
 

@@ -2,7 +2,7 @@
 import Sprite from './sprite'
 
 export default class Enemy {
-    constructor(xPos, yPos, width, height, type, awarenessRadius, movementPattern, mirrorMovement, framesPerStep, movementSpeed) {
+    constructor(xPos, yPos, width, height, type, awarenessRadius, movementPattern, mirrorMovement, framesPerStep, movementSpeed, collision) {
         this.startPoint = { x: xPos, y: yPos };
         this.position = { x: xPos, y: yPos };
         this.width = width;
@@ -13,6 +13,8 @@ export default class Enemy {
         this.mirrorMovement = mirrorMovement;
         this.framesPerStep = framesPerStep;
         this.movementSpeed = movementSpeed;
+		this.health = 100;
+		this.collisionController = collision;
 
         this.frames = 0;
         this.mirrored = false;
@@ -31,11 +33,11 @@ export default class Enemy {
                 case 'L':
                 case 'l':
                     !this.mirrored ? this.position.x -= this.movementSpeed : this.position.x += this.movementSpeed;
-                    break;
+					break;
                 case 'R':
                 case 'r':
-                    !this.mirrored ? this.position.x += this.movementSpeed : this.position.x -= this.movementSpeed;
-                    break;
+                    this.mirrored ? this.position.x -= this.movementSpeed : this.position.x += this.movementSpeed;
+					break;
                 case 'U':
                 case 'u':
                     !this.mirrored ? this.position.y -= this.movementSpeed : this.position.y += this.movementSpeed;

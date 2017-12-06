@@ -5,8 +5,8 @@ import Sprite from './sprite';
 export default class Character{
 	constructor(xpos, ypos, collisionClass){
 		//initialize character variables
-		this.height = 30; //subject to change based on sprite
-		this.width = 24; //subject to change based on sprite
+		this.height = 20; //subject to change based on sprite
+		this.width = 20; //subject to change based on sprite
 		this.health = 100;//subject to change
 		this.invincible = 0;
 		this.lives = 3;
@@ -152,15 +152,21 @@ export default class Character{
 		//attack some stuff
 		if(this.attackAgain === 0){
 			if(input.includes("punch") && this.moves.punch){
-				this.attackAgain = 20;//where 5 is the number of frames for the punch animation
-				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 50, this.direction, 25);//where 50 is the range of the attack and 25 is the damage done
+				this.attackAgain = 5;//where 5 is the number of frames for the punch animation
+				var point;
+				if(this.direction = "right"){
+					point = {}
+				}else{
+					
+				}
+				this.collisionController.playerHitsEnemy(point, 25);//where 50 is the range of the attack and 25 is the damage done
 			}
 			else if(input.includes("sword") && this.moves.sword){
-				this.attackAgain = 40;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 10;//where 5 is the number of frames for the punch animation
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 100, this.direction, 50);//where 100 is the range of the attack and 50 is the damage done
 			}
 			else if(input.includes("spear") && this.moves.spear){
-				this.attackAgain = 60;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 15;//where 5 is the number of frames for the punch animation
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
@@ -171,8 +177,8 @@ export default class Character{
 	//render the character
 	render(ctx){
 		ctx.save();
-		ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
-		//this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
+		//ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
+		this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
 		ctx.restore();
 	}//end render
 
