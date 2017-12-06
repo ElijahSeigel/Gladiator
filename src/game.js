@@ -9,7 +9,7 @@ export default class Game{
 	constructor(){
 		//initializing boring state variables
 		this.over = false;
-		this.level = -1;
+		this.level = 0;
 		this.paused = true;
 		this.input = [];
 
@@ -37,43 +37,7 @@ export default class Game{
 		// Level 3 enemies
 		
 
-		this.maps = [
-			// Level Zero
-			[
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 1 ]
-			],
-			// Level One
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-			// Level Two
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-			// Level Three
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-		]
-
-		this.player = new Character (1000, 100, this.collisionControl);
+		this.player = new Character (1370, 420, this.collisionControl);
 		//this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 
@@ -196,22 +160,15 @@ export default class Game{
 	render() {
 
 		this.backBufferContext.fillStyle = '#000';
-    this.backBufferContext.fillRect(0, 0, this.width, this.height);
+		this.backBufferContext.fillRect(0, 0, this.width, this.height);
 
-		this.maps[this.level].forEach((row, y) => {
-			row.forEach((tile, x) => {
-				var img = new Image();
-				img.src = "/tiles/tile_" + tile + ".png";
-				var tileWidth  = this.width  / row.length;
-				var tileHeight = this.height / this.maps[this.level].length;
-				//console.log(y * tileHeight);
-				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-			})
-		})
+		var img = new Image();
+		img.src = "/levelArt/level" + this.level + ".png";
+		this.backBufferContext.drawImage(img, 0, 0);
 
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
-		this.environment.render(this.backBufferContext);
+		//this.environment.render(this.backBufferContext);
 
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
@@ -231,36 +188,36 @@ export default class Game{
 			this.screenBufferContext.fillStyle = "white";
 			this.screenBufferContext.strokeStyle = "black";
 			this.screenBufferContext.font = '40px sans-serif';
-			this.screenBufferContext.fillText("Game Paused", 20, 200);
-			this.screenBufferContext.strokeText("Game Paused", 20, 200);
+			this.screenBufferContext.fillText("Game Paused", 20, 100);
+			this.screenBufferContext.strokeText("Game Paused", 20, 100);
 			this.screenBufferContext.font = '30px sans-serif';
-			this.screenBufferContext.fillText("Press esc to resume", 20, 240);
-			this.screenBufferContext.strokeText("Press esc to resume", 20, 240);
+			this.screenBufferContext.fillText("Press esc to resume", 20, 140);
+			this.screenBufferContext.strokeText("Press esc to resume", 20, 140);
 			this.screenBufferContext.font = '40px sans-serif';
-			this.screenBufferContext.fillText("Instructions", 20, 290);
-			this.screenBufferContext.strokeText("Instructions", 20, 290);
+			this.screenBufferContext.fillText("Instructions", 20, 190);
+			this.screenBufferContext.strokeText("Instructions", 20, 190);
 			this.screenBufferContext.font = '30px sans-serif';
-			this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 330);
-			this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 330);
-			this.screenBufferContext.fillText("Jump: up arrow", 20, 370);
-			this.screenBufferContext.fillText("Move right: right arrow", 20, 410);
-			this.screenBufferContext.fillText("Move left: left arrow", 20, 450);
-			this.screenBufferContext.strokeText("Jump: up arrow", 20, 370);
-			this.screenBufferContext.strokeText("Move right: right arrow", 20, 410);
-			this.screenBufferContext.strokeText("Move left: left arrow", 20, 450);
-			this.screenBufferContext.fillText("Punch: 'Q' ", 20, 490);
-			this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 490);
+			this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 230);
+			this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 230);
+			this.screenBufferContext.fillText("Jump: up arrow", 20, 270);
+			this.screenBufferContext.strokeText("Jump: up arrow", 20, 270);
+			this.screenBufferContext.fillText("Move right: right arrow", 20, 310);
+			this.screenBufferContext.fillText("Move left: left arrow", 20, 350);
+			this.screenBufferContext.strokeText("Move right: right arrow", 20, 310);
+			this.screenBufferContext.strokeText("Move left: left arrow", 20, 350);
+			this.screenBufferContext.fillText("Punch: 'Q' ", 20, 390);
+			this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 390);
 			if(this.player.moves.sword){
-				this.screenBufferContext.fillText("Stab: 'W' ", 20, 530);
-				this.screenBufferContext.strokeText("Stab: 'W' ", 20, 530);
+				this.screenBufferContext.fillText("Stab: 'W' ", 20, 430);
+				this.screenBufferContext.strokeText("Stab: 'W' ", 20, 430);
 			}
 			if(this.player.moves.spear){
-				this.screenBufferContext.fillText("Impale: 'E' ", 20, 570);
-				this.screenBufferContext.strokeText("Impale: 'E' ", 20, 570);
+				this.screenBufferContext.fillText("Impale: 'E' ", 20, 470);
+				this.screenBufferContext.strokeText("Impale: 'E' ", 20, 470);
 			}
 			if(this.player.moves.dash){
-				this.screenBufferContext.fillText("Dash: 'R' ", 20, 610);
-				this.screenBufferContext.strokeText("Dash: 'R' ", 20, 610);
+				this.screenBufferContext.fillText("Dash: 'R' ", 20, 510);
+				this.screenBufferContext.strokeText("Dash: 'R' ", 20, 510);
 			}
 		}
 		//GUI overlay
