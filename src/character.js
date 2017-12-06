@@ -18,7 +18,7 @@ export default class Character{
 		this.jumpValue = -25;
 		this.canJump = true;
 		this.direction = "right";
-		this.sprite = new Sprite('3_KNIGHT');
+		this.sprite = new Sprite('knight');
 
 		//attack variables
 		this.moves = {punch: true, sword: true, spear: true};

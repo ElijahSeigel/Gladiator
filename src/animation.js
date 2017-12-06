@@ -21,6 +21,7 @@
           this.width = 120 * image.width/image.height;
         }
         image.src = `${path}/${name}/${name}_00${i}.png`;
+        console.log(image.src);
         this.images.push(image);
       }
       this.frame = 0;

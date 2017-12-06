@@ -27,25 +27,15 @@ export default class Game{
 			[], [], [], []
 		]
 		// Level 0 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2))
 		// Level 1 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		
 		// Level 2 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		
 		// Level 3 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 500, 100, 100, 'blue', 10, ['R'], true, 100, 2))
+		
 
 		this.maps = [
 			// Level Zero
