@@ -8,9 +8,9 @@ export default class ENV{
 		this.width = wdth;
 		this.borders = [[{x: 0, y: hght}, {x: wdth, y:hght}, {x: wdth, y: hght-50}, {x: 0, y: hght-50}],
 										[{x: 0, y: hght-60}, {x: 0, y: hght - 100}, {x: wdth/2, y: hght-100}, {x:wdth/2, y: hght-60}]];
+	  this.objectController = new ObjectController();
 		this.render = this.render.bind(this);
-		this.objectController = new ObjectController();
-		this.objectController.newObject('potion', 300, 300);
+		this.objectController.newObject('dashAbility', 300, 300);
 	}//end constructor
 
 	render(ctx){

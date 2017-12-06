@@ -7,7 +7,7 @@ export default class ObjectController {
       {
         'dashAbility': {
           'distance': 10,
-          'img': 'imageHere'
+          'img': 'health.png'
         },
         'ghost': {
           'duration': 100,

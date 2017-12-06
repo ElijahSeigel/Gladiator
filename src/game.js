@@ -214,7 +214,6 @@ export default class Game{
 				img.src = "/tiles/tile_" + tile + ".png";
 				var tileWidth  = this.width  / row.length;
 				var tileHeight = this.height / this.maps[this.level].length;
-				//console.log(y * tileHeight);
 				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 			})
 		})
@@ -281,7 +280,6 @@ export default class Game{
 
 	nextLevel() {
 		this.level++;
-		//console.log(this.level)
 		// call env method to change background
 		// change character location
 	}

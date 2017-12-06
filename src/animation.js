@@ -56,9 +56,7 @@
       * @param {float} y - the y position of the sprite
       */
     render(ctx, x, y) {
-      console.log(1)
       if(this.images[this.frame]) {
-        console.log(this.images)
         ctx.drawImage(this.images[this.frame], x - this.width/2, y + this.height + 10, this.width, this.height);
       }
     }

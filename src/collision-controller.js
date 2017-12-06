@@ -3,6 +3,7 @@
 export default class CollisionController{
 	constructor(){
 		this.environment = [];
+		this.objects = [];
 	}
 
   //set at beginning of each level
@@ -11,9 +12,17 @@ export default class CollisionController{
 		this.environment = env;
 	}
 
+	addObjects(objects){
+		this.objects = objects;
+	}
+
+	playerObjectCollides(point){
+		this.objects.forEach((object) => {
+			console.log(object);
+		});
+	}
+
 	playerEnvironmentCollides(point){
-		//console.log(this.environment);
-		//console.log(point);
 		var collision = false;
 		//test
 		//point = {x: 10, y: 10};
@@ -24,7 +33,6 @@ export default class CollisionController{
 				collision = true;
 			}
 		});
-		//console.log(collision);
 		return collision;
 	}
 
@@ -55,7 +63,6 @@ export default class CollisionController{
 		var oren4 = this.getOrientation(b1, b2, a2);
 
 
-		//console.log(oren1 != oren2 && oren3 != oren4);
 		if (oren1 != oren2 && oren3 != oren4) return true;
 		return false;
 

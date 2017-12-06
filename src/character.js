@@ -21,7 +21,7 @@ export default class Character{
 		this.sprite = new Sprite('3_KNIGHT');
 
 		//attack variables
-		this.moves = {punch: true, sword: true, spear: true, dash: true};
+		this.moves = {punch: true, sword: true, spear: true};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -33,6 +33,13 @@ export default class Character{
 		this.render = this.render.bind(this);
 
 	}//end constructor
+
+	applyObject(id){
+		switch(id) {
+			case 'dashAbility':
+				this.moves['dash'] = true;
+		}
+	}
 
 	//update the character based on input
 	update(input){
@@ -151,6 +158,11 @@ export default class Character{
 		}
 		if (!stateSet && this.canJump) this.sprite.setState('idle');
 		this.sprite.update();
+
+		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y});
+		if(objectCollidesId){
+			console.log('got object!');
+		}
 	}//end update
 
 	//render the character
