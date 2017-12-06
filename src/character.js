@@ -84,6 +84,7 @@ export default class Character{
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
 				this.direction = "right";
+				this.sprite.reverse(false);
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y})){
 					this.positionVector.x += this.velocityVector.x;
 					this.sprite.setState('run');
@@ -100,6 +101,7 @@ export default class Character{
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
+				this.sprite.reverse(true);
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y})){
 					this.positionVector.x -= this.velocityVector.x;
 					this.sprite.setState('run');

@@ -32,11 +32,23 @@ export default class Enemy {
             switch(step) {
                 case 'L':
                 case 'l':
-                    !this.mirrored ? this.position.x -= this.movementSpeed : this.position.x += this.movementSpeed;
+                    if (this.mirrored) {
+                        this.position.x += this.movementSpeed;
+                        this.sprite.reverse(false);
+                    } else {
+                        this.position.x -= this.movementSpeed;
+                        this.sprite.reverse(true);
+                    }
 					break;
                 case 'R':
                 case 'r':
-                    this.mirrored ? this.position.x -= this.movementSpeed : this.position.x += this.movementSpeed;
+                    if (!this.mirrored) {
+                        this.position.x += this.movementSpeed;
+                        this.sprite.reverse(false);
+                    } else {
+                        this.position.x -= this.movementSpeed;
+                        this.sprite.reverse(true);
+                    }
 					break;
                 case 'U':
                 case 'u':

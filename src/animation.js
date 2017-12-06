@@ -8,22 +8,17 @@
       * @param {int} rate - the number of game frames between each animation frame
       * @param {boolean} looping - if the animation should loop.
       */
-    constructor(path, name, rate, looping) {
+    constructor(path, name, rate, looping, reversed) {
       // Load the sprite images
       this.images = [];
       for(var i = 0; i < 7; i++) {
         let image = new Image();
-        // Dynamically calculate the size of the final sprite
-        // using a height of 120px and the aspect ratio of the
-        // source images.
-        this.height = 50;
-        image.onload = () => {
-          this.width = 50 * image.width/image.height;
-        }
-        image.src = `${path}/${name}/${name}_00${i}.png`;
-        console.log(image.src);
+        image.src = reversed ? `${path}/${name}/REVERSE_${name}_00${i}.png` : `${path}/${name}/${name}_00${i}.png`;
+        console.log(image.src)
         this.images.push(image);
       }
+      this.height = 50;
+      this.width = 50;
       this.frame = 0;
       this.rate = rate;
       this.counter = 0;

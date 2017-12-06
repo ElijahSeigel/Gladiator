@@ -11,15 +11,27 @@ export default class Sprite {
   constructor(name) {
     // Create the animation for the sprite
     this.animations = {
-      'idle': new Animation('sprites/' + name, `IDLE`, 4, true),
-      'walk': new Animation('sprites/' + name, `WALK`, 2, true),
-      'run': new Animation('sprites/' + name, `RUN`, 1, true),
-      'jump': new Animation('sprites/' + name, `JUMP`, 1, false),
-      'attack': new Animation('sprites/' + name, `ATTACK`, 1, false),
-      'hurt': new Animation('sprites/' + name, `HURT`, 1, false),
-      'die': new Animation('sprites/' + name, `DIE`, 1, false)
+      'idle': new Animation('sprites/' + name, `IDLE`, 4, true, false),
+      'walk': new Animation('sprites/' + name, `WALK`, 2, true, false),
+      'run': new Animation('sprites/' + name, `RUN`, 1, true, false),
+      'jump': new Animation('sprites/' + name, `JUMP`, 1, false, false),
+      'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, false),
+      'hurt': new Animation('sprites/' + name, `HURT`, 1, false, false),
+      'die': new Animation('sprites/' + name, `DIE`, 1, false, false)
     }
+    this.reversedAnimations = {
+      'idle': new Animation('sprites/' + name, `IDLE`, 4, true, true),
+      'walk': new Animation('sprites/' + name, `WALK`, 2, true, true),
+      'run': new Animation('sprites/' + name, `RUN`, 1, true, true),
+      'jump': new Animation('sprites/' + name, `JUMP`, 1, false, true),
+      'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, true),
+      'hurt': new Animation('sprites/' + name, `HURT`, 1, false, true),
+      'die': new Animation('sprites/' + name, `DIE`, 1, false, true)
+    }
+    this.reversed = false;
     this.state = 'idle';
+
+    this.reverse = this.reverse.bind(this);
   }
   /** @method setState
     * Sets the animation state for this sprite.
@@ -30,12 +42,22 @@ export default class Sprite {
     if (newState === this.state) return;
     this.state = newState;
     this.animations[newState].reset();
+    this.reversedAnimations[newState].reset();
+  }
+  reverse(value) {
+    console.log(value)
+    if (value === undefined) {
+      this.reversed = !this.reversed
+    } else {
+      this.reversed = value
+    }
   }
   /** @method update
     * Updates the sprite
     */
   update() {
     this.animations[this.state].advance();
+    this.reversedAnimations[this.state].advance();
   }
   /** @method render
     * Renders the sprite
@@ -44,6 +66,7 @@ export default class Sprite {
     * @param {float} y - the y position of the sprite
     */
   render(ctx, x, y) {
-    this.animations[this.state].render(ctx, x, y);
+    if (this.reversed) this.reversedAnimations[this.state].render(ctx, x, y);
+    else this.animations[this.state].render(ctx, x, y);
   }
 }
