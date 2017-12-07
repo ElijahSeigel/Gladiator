@@ -27,13 +27,13 @@ export default class Game{
 			[], [], [], []
 		]
 		// Level 0 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2, this.collisionControl))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2, this.collisionControl))
+		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2, this.collisionControl))
 		// Level 1 enemies
 		this.enemies[1].push(new Enemy(218, 166, 20, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
-		this.enemies[1].push(new Enemy(1059, 166, 20, 20, 'ork1', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
-		this.enemies[1].push(new Enemy(714, 452, 20, 20, 'ork1', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
+		this.enemies[1].push(new Enemy(1059, 166, 20, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
+		this.enemies[1].push(new Enemy(714, 452, 20, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
 		
 		// Level 3 enemies

@@ -48,6 +48,15 @@ export default class CollisionController{
 			}
 		});
 	}
+	
+	enemyHitsPlayer(point, dmg){
+		if(this.pointInside(point, [ this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
+					{x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y + this.player.height},
+					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
+				this.player.health -= dmg;
+				//console.log(player.health);
+			}
+	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise
 	getOrientation(a, b, c){
