@@ -17,7 +17,7 @@ export default class Sprite {
       'jump': new Animation('sprites/' + name, `JUMP`, 1, false, false),
       'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, false),
       'hurt': new Animation('sprites/' + name, `HURT`, 1, false, false),
-      'die': new Animation('sprites/' + name, `DIE`, 1, false, false)
+      'die': new Animation('sprites/' + name, `DIE`, 2, false, false)
     }
     this.reversedAnimations = {
       'idle': new Animation('sprites/' + name, `IDLE`, 4, true, true),
@@ -26,7 +26,7 @@ export default class Sprite {
       'jump': new Animation('sprites/' + name, `JUMP`, 1, false, true),
       'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, true),
       'hurt': new Animation('sprites/' + name, `HURT`, 1, false, true),
-      'die': new Animation('sprites/' + name, `DIE`, 1, false, true)
+      'die': new Animation('sprites/' + name, `DIE`, 2, false, true)
     }
     this.reversed = false;
     this.state = 'idle';
@@ -66,7 +66,12 @@ export default class Sprite {
     * @param {float} y - the y position of the sprite
     */
   render(ctx, x, y) {
-    if (this.reversed) this.reversedAnimations[this.state].render(ctx, x-20, y-22);
-    else this.animations[this.state].render(ctx, x-5, y-22);
+    if(this.state === 'die'){
+		if (this.reversed) this.reversedAnimations[this.state].render(ctx, x-20, y-15);
+		else this.animations[this.state].render(ctx, x-5, y-15);
+	}else{
+		if (this.reversed) this.reversedAnimations[this.state].render(ctx, x-20, y-22);
+		else this.animations[this.state].render(ctx, x-5, y-22);
+	}
   }
 }

@@ -40,7 +40,7 @@ export default class Game{
 		
 
 		this.player = new Character (1370, 420, this.collisionControl);
-		//this.collisionControl.addPlayer(this.player);
+		this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		this.collisionControl.addPlayer(this.player);
 
