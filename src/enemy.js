@@ -19,7 +19,7 @@ export default class Enemy {
         this.frames = 0;
         this.mirrored = false;
         this.sprite = new Sprite(type);
-        this.sprite.setState('walk');
+        movementSpeed > 2 ? this.sprite.setState('run') : this.sprite.setState('walk');
     }
     update(characterPosition) {
         var characterDistanceSquared = Math.pow((characterPosition.x - this.position.x), 2) + Math.pow((characterPosition.y - this.position.y), 2)

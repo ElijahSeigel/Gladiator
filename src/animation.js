@@ -14,7 +14,6 @@
       for(var i = 0; i < 7; i++) {
         let image = new Image();
         image.src = reversed ? `${path}/${name}/REVERSE_${name}_00${i}.png` : `${path}/${name}/${name}_00${i}.png`;
-        console.log(image.src)
         this.images.push(image);
       }
       this.height = 50;

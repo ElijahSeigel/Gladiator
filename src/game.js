@@ -62,8 +62,12 @@ export default class Game{
 		message.id = "message";
 		message.textContent = "";
 		document.body.appendChild(message);
+		
+		// Initialize level art
+		this.image = new Image();
+		this.image.src = "/levelArt/level1.png";
 
-		//bind class functions
+		// Bind class functions
 		this.handleInput = this.handleInput.bind(this);
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
@@ -73,15 +77,16 @@ export default class Game{
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
 
-
 		// Start the game loop
-		this.nextLevel();
-		this.collisionControl.addEnemies(this.enemies[this.level]);
-		this.interval = setInterval(this.loop, 30);
-		
-		
-		
+		setTimeout(() => {
 
+			// Set call some functions
+			this.nextLevel();
+			this.render();
+			this.collisionControl.addEnemies(this.enemies[this.level]);
+			this.interval = setInterval(this.loop, 30);
+		}, 3000)
+		
 	}//end constructor
 
 	  //function which builds a list of input
@@ -165,17 +170,10 @@ export default class Game{
 	//render the game world
 	render() {
 
-		this.backBufferContext.fillStyle = '#000';
-		this.backBufferContext.fillRect(0, 0, this.width, this.height);
-
-		var img = new Image();
-		img.src = "/levelArt/level" + this.level + ".png";
-		this.backBufferContext.drawImage(img, 0, 0);
-
+		console.log(this.image.src)
+		this.backBufferContext.drawImage(this.image, 0, 0);
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
-		//this.environment.render(this.backBufferContext);
-
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
 		//display game over and message
@@ -234,6 +232,7 @@ export default class Game{
 
 	nextLevel() {
 		this.level++;
+		this.image.src = "/levelArt/level" + this.level + ".png";
 		//console.log(this.level)
 		// call env method to change background
 		// change character location
