@@ -54,7 +54,7 @@ export default class CollisionController{
 					{x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y + this.player.height},
 					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
 				this.player.health -= dmg;
-				//console.log(player.health);
+				//console.log(this.player.health);
 			}
 	}
 
