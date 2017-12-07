@@ -31,9 +31,9 @@ export default class Game{
 		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2, this.collisionControl))
 		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2, this.collisionControl))
 		// Level 1 enemies
-		this.enemies[1].push(new Enemy(218, 166, 20, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
-		this.enemies[1].push(new Enemy(1059, 166, 20, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
-		this.enemies[1].push(new Enemy(714, 452, 20, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
+		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
+		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
+		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
 		
 		// Level 3 enemies
@@ -172,8 +172,8 @@ export default class Game{
 
 		//console.log(this.image.src)
 		this.backBufferContext.drawImage(this.image, 0, 0);
-		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
+		this.player.render(this.backBufferContext);
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
 		//display game over and message

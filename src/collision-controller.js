@@ -44,9 +44,11 @@ export default class CollisionController{
 					{x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height},
 					{x:enemy.position.x,y: enemy.position.y + enemy.height} ])) {
 				enemy.health -= dmg;
-				//console.log(enemy.health);
+				console.log(enemy.health);
+				return true;
 			}
 		});
+		return false;
 	}
 	
 	enemyHitsPlayer(point, dmg){
@@ -55,7 +57,9 @@ export default class CollisionController{
 					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
 				this.player.health -= dmg;
 				//console.log(this.player.health);
+				return true;
 			}
+			return false;
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise

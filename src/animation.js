@@ -52,7 +52,7 @@
       */
     render(ctx, x, y) {
       if(this.images[this.frame]) {
-        ctx.drawImage(this.images[this.frame], x-5, y-22, this.width, this.height);
+        ctx.drawImage(this.images[this.frame], x, y, this.width, this.height);
       }
     }
   }

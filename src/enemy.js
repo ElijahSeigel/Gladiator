@@ -72,6 +72,7 @@ export default class Enemy {
         this.sprite.update();
     }
     render(ctx) {
-        this.sprite.render(ctx, this.position.x, this.position.y);
+		this.sprite.render(ctx, this.position.x, this.position.y);
+		ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }

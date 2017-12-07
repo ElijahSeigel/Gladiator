@@ -66,7 +66,7 @@ export default class Sprite {
     * @param {float} y - the y position of the sprite
     */
   render(ctx, x, y) {
-    /*if (this.reversed) this.reversedAnimations[this.state].render(ctx, x, y);
-    else */this.animations[this.state].render(ctx, x, y);
+    if (this.reversed) this.reversedAnimations[this.state].render(ctx, x-20, y-22);
+    else this.animations[this.state].render(ctx, x-5, y-22);
   }
 }
