@@ -170,7 +170,7 @@ export default class Game{
 	//render the game world
 	render() {
 
-		console.log(this.image.src)
+		//console.log(this.image.src)
 		this.backBufferContext.drawImage(this.image, 0, 0);
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));

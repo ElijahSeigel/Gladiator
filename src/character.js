@@ -127,14 +127,15 @@ export default class Character{
 
 		if(this.invincible >0){
 			this.invincible --;
-			if(this.direction === "right"){
+			/*if(this.direction === "right"){
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + 10*this.velocityVector.x +this.width , y: this.positionVector.y + this.height/2})){
 
 					this.positionVector.x += 10*this.velocityVector.x;
 				}else{
 					for(i = this.velocityVector.x*10 - 1; i>0; i--){
-						if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i , y: this.positionVector.y + this.height/2})){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i , y: this.positionVector.y + this.height/2})){
 							this.positionVector.x += i;
+							break;
 						}
 					}
 				}
@@ -143,12 +144,46 @@ export default class Character{
 					this.positionVector.x -= 10*this.velocityVector.x;
 				}else{
 					for(i = this.velocityVector.x*10 - 1; i>0; i--){
-						if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i , y: this.positionVector.y + this.height/2})){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i , y: this.positionVector.y + this.height/2})){
 							this.positionVector.x -= i;
+							break;
+						}
+					}
+				}
+			}*/
+			
+			if(this.direction === "right"){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x*10 + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x*10 + this.width, y: this.positionVector.y})){
+					this.positionVector.x += this.velocityVector.x*10;
+					this.sprite.setState('run');
+					stateSet = true;
+				}
+				else{
+					for(i = this.velocityVector.x*10 - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y})){
+							this.positionVector.x += i;
+							break;
 						}
 					}
 				}
 			}
+			else {
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x*10, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x*10, y: this.positionVector.y})){
+					this.positionVector.x -= this.velocityVector.x*10;
+					this.sprite.setState('run');
+					stateSet = true;
+				}
+				else{
+					for(i = this.velocityVector.x*10 - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y})){
+							this.positionVector.x -= i;
+							break;
+						}
+					}
+				}
+			}
+			
+			
 		}
 
 		//attack some stuff
@@ -157,11 +192,11 @@ export default class Character{
 				this.attackAgain = 5;//where 5 is the number of frames for the punch animation
 				var point;
 				if(this.direction = "right"){
-					point = {}
+					point = {x: this.positionVector.x+this.width+20, y: this.positionVector.y+this.height/2};
 				}else{
-					
+					point = {x: this.positionVector.x-20, y: this.positionVector.y+this.height/2};
 				}
-				this.collisionController.playerHitsEnemy(point, 25);//where 50 is the range of the attack and 25 is the damage done
+				this.collisionController.playerHitsEnemy(point, 25);//where 20 is the range of the attack and 25 is the damage done
 			}
 			else if(input.includes("sword") && this.moves.sword){
 				this.attackAgain = 10;//where 5 is the number of frames for the punch animation

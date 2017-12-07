@@ -45,7 +45,7 @@ export default class Sprite {
     this.reversedAnimations[newState].reset();
   }
   reverse(value) {
-    console.log(value)
+    //console.log(value)
     if (value === undefined) {
       this.reversed = !this.reversed
     } else {
@@ -66,7 +66,7 @@ export default class Sprite {
     * @param {float} y - the y position of the sprite
     */
   render(ctx, x, y) {
-    if (this.reversed) this.reversedAnimations[this.state].render(ctx, x, y);
-    else this.animations[this.state].render(ctx, x, y);
+    /*if (this.reversed) this.reversedAnimations[this.state].render(ctx, x, y);
+    else */this.animations[this.state].render(ctx, x, y);
   }
 }

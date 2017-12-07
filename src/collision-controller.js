@@ -44,7 +44,7 @@ export default class CollisionController{
 					{x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height},
 					{x:enemy.position.x,y: enemy.position.y + enemy.height} ])) {
 				enemy.health -= dmg;
-				console.log('hit');
+				//console.log(enemy.health);
 			}
 		});
 	}
