@@ -20,7 +20,7 @@ export default class Game{
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
 		this.environment = new Environment(this.height, this.width, this.level);
-		this.collisionControl.addEnvironment(this.environment.borders);
+		this.collisionControl.addEnvironment(this.environment.level4);
 
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
@@ -208,7 +208,7 @@ export default class Game{
 		this.backBufferContext.fillStyle = '#000';
     this.backBufferContext.fillRect(0, 0, this.width, this.height);
 
-		this.maps[this.level].forEach((row, y) => {
+		/*this.maps[this.level].forEach((row, y) => {
 			row.forEach((tile, x) => {
 				var img = new Image();
 				img.src = "/tiles/tile_" + tile + ".png";
@@ -217,7 +217,7 @@ export default class Game{
 				//console.log(y * tileHeight);
 				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 			})
-		})
+		})*/
 
 		this.player.render(this.backBufferContext);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));

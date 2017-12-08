@@ -156,7 +156,9 @@ export default class Character{
 	//render the character
 	render(ctx){
 		ctx.save();
-		this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
+		ctx.fillStyle = "red";
+		ctx.fillRect(this.positionVector.x, this.positionVector.y,this.width,this.height);
+		//this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
 		ctx.restore();
 	}//end render
 
