@@ -3,13 +3,22 @@
 export default class CollisionController{
 	constructor(){
 		this.environment = [];
-		this.objects = [];
+		this.enemies = [];
+		this.player;
 	}
 
   //set at beginning of each level
 	//env should be an array of polygons where a polygon is an array of points
 	addEnvironment(env){
 		this.environment = env;
+	}
+
+	addEnemies(enm){
+		this.enemies = enm;
+	}
+
+	addPlayer(plyr){
+		this.player = plyr;
 	}
 
 	addObjects(objects){
@@ -42,6 +51,15 @@ export default class CollisionController{
 			}
 		});
 		return collision;
+	}
+
+	playerHitsEnemy(point, dmg){
+		this.enemies.forEach((enemy)=>{
+			if(this.pointInside(point, [enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y}, {x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height}, {x:enemy.position.x,y: enemy.position.y + height}])) {
+				enemy.health -= dmg;
+				console.log('hit');
+			}
+		});
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise

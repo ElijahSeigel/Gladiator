@@ -16,9 +16,9 @@
         // Dynamically calculate the size of the final sprite
         // using a height of 120px and the aspect ratio of the
         // source images.
-        this.height = 100;
+        this.height = 50;
         image.onload = () => {
-          this.width = 120 * image.width/image.height;
+          this.width = 50 * image.width/image.height;
         }
         image.src = `${path}/${name}/${name}_00${i}.png`;
         console.log(image.src);
@@ -58,7 +58,7 @@
       */
     render(ctx, x, y) {
       if(this.images[this.frame]) {
-        ctx.drawImage(this.images[this.frame], x - this.width/2, y + this.height + 10, this.width, this.height);
+        ctx.drawImage(this.images[this.frame], x-5, y-22, this.width, this.height);
       }
     }
   }

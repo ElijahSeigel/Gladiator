@@ -5,8 +5,8 @@ import Sprite from './sprite';
 export default class Character{
 	constructor(xpos, ypos, collisionClass){
 		//initialize character variables
-		this.height = 200; //subject to change based on sprite
-		this.width = 100; //subject to change based on sprite
+		this.height = 20; //subject to change based on sprite
+		this.width = 20; //subject to change based on sprite
 		this.health = 100;//subject to change
 		this.invincible = 0;
 		this.lives = 3;
@@ -14,9 +14,9 @@ export default class Character{
 
 		//movement varaibles
 		this.positionVector = {x: xpos, y: ypos};
-		this.movementSpeed = 10;
+		this.movementSpeed = 5;
 		this.velocityVector = {x: this.movementSpeed, y: 1};
-		this.jumpValue = -25;
+		this.jumpValue = -15;
 		this.canJump = true;
 		this.direction = "right";
 		this.sprite = new Sprite('knight');
@@ -63,9 +63,9 @@ export default class Character{
 		}
 		var i; //temp variable for the loops
 		if(this.velocityVector.y>0){//send bottom
-			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width, y: this.positionVector.y + this.velocityVector.y + this.height}) || this.collisionController.playerEnvironmentCollides({x: this.positionVector.x, y: this.positionVector.y + this.velocityVector.y + this.height}) ){
 				for(i = this.velocityVector.y - 1; i>=0; i--){
-					if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+					if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width, y: this.positionVector.y + i + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x, y: this.positionVector.y + i + this.height})){
 						this.positionVector.y += i;
 						break;
 					}
@@ -78,14 +78,13 @@ export default class Character{
 			}
 		}
 		else{
-			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y})){//send top
+			if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width, y: this.positionVector.y + this.velocityVector.y}) || this.collisionController.playerEnvironmentCollides({x: this.positionVector.x, y: this.positionVector.y + this.velocityVector.y}) ){//send top
 				for(i = this.velocityVector.y + 1; i<=0; i++){
-					if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width/2, y: this.positionVector.y + this.velocityVector.y + this.height})){
+					if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.width, y: this.positionVector.y + i}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x, y: this.positionVector.y + i})){
 						this.positionVector.y += i;
 						break;
 					}
 				}
-
 				this.velocityVector.y = 1;
 			}else{
 				this.positionVector.y += this.velocityVector.y;
@@ -97,18 +96,34 @@ export default class Character{
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
 				this.direction = "right";
-				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height/2})){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y})){
 					this.positionVector.x += this.velocityVector.x;
 					this.sprite.setState('run');
 					stateSet = true;
 				}
+				else{
+					for(i = this.velocityVector.x - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y})){
+							this.positionVector.x += i;
+							break;
+						}
+					}
+				}
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
-				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height/2})){
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y})){
 					this.positionVector.x -= this.velocityVector.x;
 					this.sprite.setState('run');
 					stateSet = true;
+				}
+				else{
+					for(i = this.velocityVector.x - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y})){
+							this.positionVector.x -= i;
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -149,15 +164,21 @@ export default class Character{
 		//attack some stuff
 		if(this.attackAgain === 0){
 			if(input.includes("punch") && this.moves.punch){
-				this.attackAgain = 20;//where 5 is the number of frames for the punch animation
-				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 50, this.direction, 25);//where 50 is the range of the attack and 25 is the damage done
+				this.attackAgain = 5;//where 5 is the number of frames for the punch animation
+				var point;
+				if(this.direction = "right"){
+					point = {}
+				}else{
+					
+				}
+				this.collisionController.playerHitsEnemy(point, 25);//where 50 is the range of the attack and 25 is the damage done
 			}
 			else if(input.includes("sword") && this.moves.sword){
-				this.attackAgain = 40;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 10;//where 5 is the number of frames for the punch animation
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 100, this.direction, 50);//where 100 is the range of the attack and 50 is the damage done
 			}
 			else if(input.includes("spear") && this.moves.spear){
-				this.attackAgain = 60;//where 5 is the number of frames for the punch animation
+				this.attackAgain = 15;//where 5 is the number of frames for the punch animation
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
@@ -174,6 +195,7 @@ export default class Character{
 	//render the character
 	render(ctx){
 		ctx.save();
+		//ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
 		this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
 		ctx.restore();
 	}//end render
