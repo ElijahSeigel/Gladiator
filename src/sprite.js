@@ -17,7 +17,8 @@ export default class Sprite {
       'jump': new Animation('sprites/' + name, `JUMP`, 1, false, false),
       'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, false),
       'hurt': new Animation('sprites/' + name, `HURT`, 1, false, false),
-      'die': new Animation('sprites/' + name, `DIE`, 2, false, false)
+      'die': new Animation('sprites/' + name, `DIE`, 2, false, false),
+	  'lightning': new Animation('sprites/' + name, `LIGHTNING`, 2, false, false)
     }
     this.reversedAnimations = {
       'idle': new Animation('sprites/' + name, `IDLE`, 4, true, true),
@@ -26,7 +27,8 @@ export default class Sprite {
       'jump': new Animation('sprites/' + name, `JUMP`, 1, false, true),
       'attack': new Animation('sprites/' + name, `ATTACK`, 1, false, true),
       'hurt': new Animation('sprites/' + name, `HURT`, 1, false, true),
-      'die': new Animation('sprites/' + name, `DIE`, 2, false, true)
+      'die': new Animation('sprites/' + name, `DIE`, 2, false, true),
+	  'lightning': new Animation('sprites/' + name, `LIGHTNING`, 2, false, true)
     }
     this.reversed = false;
     this.state = 'idle';

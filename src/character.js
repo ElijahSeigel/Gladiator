@@ -182,7 +182,7 @@ export default class Character{
 					stateSet = true;
 				}
 				else if(input.includes("lightning") && this.moves.lightning){
-					this.attackAgain = 6;//where 6 is the number of frames for the attack animation
+					this.attackAgain = 14;//where 6 is the number of frames for the attack animation
 					var point1;
 					var point2;
 					var point3;
@@ -198,7 +198,7 @@ export default class Character{
 							}
 						}
 					}//where 25 is the damage done
-					this.sprite.setState('attack');
+					this.sprite.setState('lightning');
 					stateSet = true;
 				}
 			}
