@@ -164,7 +164,7 @@ export default class Character{
 		//attack some stuff
 		if(this.attackAgain === 0){
 			if(input.includes("punch") && this.moves.punch){
-				this.attackAgain = 7;//where 7 is the number of frames for the attack animation
+				this.attackAgain = 7;//where is the number of frames for the attack animation
 				var point1;
 				var point2;
 				if(this.direction = "right"){
