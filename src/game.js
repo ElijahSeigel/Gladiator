@@ -71,6 +71,7 @@ export default class Game{
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
 		this.loop = this.loop.bind(this);
+		this.nextLevel = this.nextLevel.bind(this);
 
 		// Set up event handlers
 		window.onkeydown = this.handleInput;
@@ -161,6 +162,7 @@ export default class Game{
 			}
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
+			
   }//end update
 
 	//render the game world
@@ -174,50 +176,17 @@ export default class Game{
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
 		//display game over and message
-		if(this.over){
+		if(this.player.over){
 			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
 			this.screenBufferContext.fillRect(0,0, this.width, this.height);
-			this.screenBufferContext.fillStyle = "white";
+			this.screenBufferContext.fillStyle = "red";
 			this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.font = '80px sans-serif';
 			this.screenBufferContext.fillText("Game Over", 20, 200);
 			this.screenBufferContext.strokeText("Game Over", 20, 200);
 		}
-		//display paused screen and instructions
-    if(this.paused && ! this.over){
-			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
-			this.screenBufferContext.fillRect(0,0, this.width, this.height);
-			this.screenBufferContext.fillStyle = "white";
-			this.screenBufferContext.strokeStyle = "black";
-			this.screenBufferContext.font = '40px sans-serif';
-			this.screenBufferContext.fillText("Game Paused", 20, 100);
-			this.screenBufferContext.strokeText("Game Paused", 20, 100);
-			this.screenBufferContext.font = '30px sans-serif';
-			this.screenBufferContext.fillText("Press esc to resume", 20, 140);
-			this.screenBufferContext.strokeText("Press esc to resume", 20, 140);
-			this.screenBufferContext.font = '40px sans-serif';
-			this.screenBufferContext.fillText("Instructions", 20, 190);
-			this.screenBufferContext.strokeText("Instructions", 20, 190);
-			this.screenBufferContext.font = '30px sans-serif';
-			this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 230);
-			this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 230);
-			this.screenBufferContext.fillText("Jump: up arrow", 20, 270);
-			this.screenBufferContext.strokeText("Jump: up arrow", 20, 270);
-			this.screenBufferContext.fillText("Move right: right arrow", 20, 310);
-			this.screenBufferContext.fillText("Move left: left arrow", 20, 350);
-			this.screenBufferContext.strokeText("Move right: right arrow", 20, 310);
-			this.screenBufferContext.strokeText("Move left: left arrow", 20, 350);
-			this.screenBufferContext.fillText("Punch: 'Q' ", 20, 390);
-			this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 390);
-			if(this.player.moves.sword){
-				this.screenBufferContext.fillText("Stab: 'W' ", 20, 430);
-				this.screenBufferContext.strokeText("Stab: 'W' ", 20, 430);
-			}
-			if(this.player.moves.spear){
-				this.screenBufferContext.fillText("Impale: 'E' ", 20, 470);
-				this.screenBufferContext.strokeText("Impale: 'E' ", 20, 470);
-			}
 			//display paused screen and instructions
-		if(this.paused && ! this.over){
+				if(this.paused && ! this.player.over){
 				this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
 				this.screenBufferContext.fillRect(0,0, this.width, this.height);
 				this.screenBufferContext.fillStyle = "white";
@@ -250,12 +219,10 @@ export default class Game{
 					this.screenBufferContext.fillText("Dash: 'R' ", 20, 470);
 					this.screenBufferContext.strokeText("Dash: 'R' ", 20, 470);
 				}
-			}
-		//GUI overlay
 		}//end if game !over
 	}// end render
 
-	nextLevel() {
+	nextLevel(){
 		this.level++;
 		this.image.src = "/levelArt/level" + this.level + ".png";
 		//switches to next level
