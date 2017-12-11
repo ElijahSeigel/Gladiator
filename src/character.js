@@ -24,7 +24,7 @@ export default class Character{
 		this.sprite = new Sprite('knight');
 
 		//attack variables
-		this.moves = {sword: true, lightning: true, dash: true};
+		this.moves = {sword: false, lightning: false, dash: false};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -36,7 +36,7 @@ export default class Character{
 		this.render = this.render.bind(this);
 
 	}//end constructor
-	
+
 	/** @method warpToStart
 	* Used at the end of each level to move character to start of next level
 	*/
