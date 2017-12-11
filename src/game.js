@@ -2,6 +2,7 @@
 //beta to develop character
 import Character from './character';
 import CollisionController from './collision-controller';
+import ObjectController from './object-controller';
 import Environment from './ENV';
 import Enemy from './enemy'
 
@@ -9,7 +10,7 @@ export default class Game{
 	constructor(){
 		//initializing boring state variables
 		this.over = false;
-		this.level = 0;
+		this.level = 1;
 		this.paused = true;
 		this.input = [];
 
@@ -19,8 +20,10 @@ export default class Game{
 
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
-		this.environment = new Environment(this.height, this.width, this.level);
+		this.objectController = new ObjectController();
+		this.environment = new Environment(this.height, this.width, this.level, this.objectController);
 		this.collisionControl.addEnvironment(this.environment.level1);
+		this.collisionControl.addObjects(this.environment.objects);
 
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
@@ -35,11 +38,11 @@ export default class Game{
 		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
 		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
-		
+
 		// Level 3 enemies
-		
 
 		this.player = new Character (1370, 420, this.collisionControl);
+		this.player.addObjectController(this.objectController);
 		this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		this.collisionControl.addPlayer(this.player);
@@ -62,7 +65,7 @@ export default class Game{
 		message.id = "message";
 		message.textContent = "";
 		document.body.appendChild(message);
-		
+
 		// Initialize level art
 		this.image = new Image();
 		this.image.src = "/levelArt/level1.png";
@@ -81,12 +84,12 @@ export default class Game{
 		setTimeout(() => {
 
 			// Set call some functions
-			this.nextLevel();
+			//this.nextLevel();
 			this.render();
 			this.collisionControl.addEnemies(this.enemies[this.level]);
 			this.interval = setInterval(this.loop, 30);
 		}, 3000)
-		
+
 	}//end constructor
 
 	  //function which builds a list of input
@@ -165,22 +168,56 @@ export default class Game{
 
 	//render the game world
 	render() {
-		if(!this.over){
-			//console.log(this.image.src)
-			this.backBufferContext.drawImage(this.image, 0, 0);
-			this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
-			this.player.render(this.backBufferContext);
-			this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
-			//display game over and message
-			if(this.player.over){
-				this.over = true;
-				this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
-				this.screenBufferContext.fillRect(0,0, this.width, this.height);
-				this.screenBufferContext.fillStyle = "white";
-				this.screenBufferContext.strokeStyle = "black";
-				this.screenBufferContext.fillText("Game Over", 20, 200);
-				this.screenBufferContext.strokeText("Game Over", 20, 200);
+		//console.log(this.image.src)
+		this.backBufferContext.drawImage(this.image, 0, 0);
+		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
+		this.player.render(this.backBufferContext);
+		this.objectController.render(this.backBufferContext);
+		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
+
+		//display game over and message
+		if(this.over){
+			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillRect(0,0, this.width, this.height);
+			this.screenBufferContext.fillStyle = "white";
+			this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.fillText("Game Over", 20, 200);
+			this.screenBufferContext.strokeText("Game Over", 20, 200);
+		}
+		//display paused screen and instructions
+    if(this.paused && ! this.over){
+			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillRect(0,0, this.width, this.height);
+			this.screenBufferContext.fillStyle = "white";
+			this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.font = '40px sans-serif';
+			this.screenBufferContext.fillText("Game Paused", 20, 100);
+			this.screenBufferContext.strokeText("Game Paused", 20, 100);
+			this.screenBufferContext.font = '30px sans-serif';
+			this.screenBufferContext.fillText("Press esc to resume", 20, 140);
+			this.screenBufferContext.strokeText("Press esc to resume", 20, 140);
+			this.screenBufferContext.font = '40px sans-serif';
+			this.screenBufferContext.fillText("Instructions", 20, 190);
+			this.screenBufferContext.strokeText("Instructions", 20, 190);
+			this.screenBufferContext.font = '30px sans-serif';
+			this.screenBufferContext.fillText("Reach the ladder to complete a level", 20, 230);
+			this.screenBufferContext.strokeText("Reach the ladder to complete a level", 20, 230);
+			this.screenBufferContext.fillText("Jump: up arrow", 20, 270);
+			this.screenBufferContext.strokeText("Jump: up arrow", 20, 270);
+			this.screenBufferContext.fillText("Move right: right arrow", 20, 310);
+			this.screenBufferContext.fillText("Move left: left arrow", 20, 350);
+			this.screenBufferContext.strokeText("Move right: right arrow", 20, 310);
+			this.screenBufferContext.strokeText("Move left: left arrow", 20, 350);
+			this.screenBufferContext.fillText("Punch: 'Q' ", 20, 390);
+			this.screenBufferContext.strokeText("Punch: 'Q' ", 20, 390);
+			if(this.player.moves.sword){
+				this.screenBufferContext.fillText("Stab: 'W' ", 20, 430);
+				this.screenBufferContext.strokeText("Stab: 'W' ", 20, 430);
+			}
+			if(this.player.moves.spear){
+				this.screenBufferContext.fillText("Impale: 'E' ", 20, 470);
+				this.screenBufferContext.strokeText("Impale: 'E' ", 20, 470);
 			}
 			//display paused screen and instructions
 		if(this.paused && ! this.over){

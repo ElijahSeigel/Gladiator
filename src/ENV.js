@@ -1,13 +1,14 @@
-import ObjectController from './object-controller';
 //ENV.js
 //this is just filler to work on the charachter.
 
 export default class ENV{
-	constructor(hght, wdth,level){
+	constructor(hght, wdth,level, objectController){
 		this.height = hght;
 		this.width = wdth;
+		this.objectController = objectController;
 		this.level = 1;
 		this.end = {x: 1275, y: 450};
+		console.log(level);
 		this.level1 = [
 						[{x: 0,y: 650}, {x: 0,y: 416}, {x: 287,y: 416}, {x: 287,y: 449}, {x: 319,y: 449}, {x: 319,y: 480}, {x: 1217,y: 480}, {x: 1217,y: 449}, {x: 1247,y: 449}, {x: 1247,y: 416}, {x: 1279,y: 416}, {x: 1279,y: 449}, {x: 1311,y: 449}, {x: 1311,y: 480}, {x: 1500,y: 480}, {x: 1500,y: 650}],
 						[{x: 352,y: 404}, {x: 352,y: 375}, {x: 384,y: 374}, {x: 384,y: 342}, {x: 448,y: 342}, {x: 448,y: 303}, {x: 514,y: 303}, {x: 514,y: 277}, {x: 546,y: 277}, {x: 546,y: 245}, {x: 577,y:245 }, {x: 577,y: 220}, {x: 950,y: 220}, {x: 950,y: 244}, {x: 983,y: 244}, {x: 983,y: 277}, {x: 1014,y: 277}, {x: 1014,y: 303}, {x: 1080,y: 303}, {x: 1080,y: 341}, {x: 1144,y: 341}, {x: 1144,y: 374}, {x: 1176,y: 374}, {x: 1176,y: 404}],
@@ -15,6 +16,8 @@ export default class ENV{
 						[{x: 0,y: 416}, {x: 0,y: 192}, {x: 521,y: 192}, {x: 521,y: 224}, {x: 448,y: 223}, {x: 448,y: 256}, {x: 384,y: 256}, {x: 384,y: 288}, {x: 247,y: 288}, {x: 247,y: 615}],
 						[{x: 1308,y: 353}, {x: 1308,y: 287}, {x: 1144,y: 287}, {x: 1144,y: 257}, {x: 1080,y: 257}, {x: 1080,y: 224}, {x: 1007,y: 224}, {x: 1007,y: 192}, {x: 1500,y: 192}, {x: 1500,y: 353}]
 						];
+		this.objectController.newObject('dashAbility', 300, 500);
+		this.objects = this.objectController.exists;
 		this.level2 = [[{x: 0, y: hght-50}, {x: 0, y: hght}, {x: wdth, y: hght}, {x: wdth, y: hght-50}],
 							[{x: 0, y: 450},{x: 0, y: 500},{x: 1300, y: 500},{x: 1300, y: 450}],
 							[{x: 200, y: 300},{x: 200, y: 350},{x: 1500, y: 350},{x: 1500, y: 300}]];
@@ -37,8 +40,6 @@ export default class ENV{
 						[{x: 1250, y: hght-150},{x: 1250, y: hght},{x: 1300, y: hght},{x: 1300, y: hght-150}]];
 		this.render = this.render.bind(this);
 		this.nextLevel = this.nextLevel.bind(this);
-		this.objectController = new ObjectController();
-		this.objectController.newObject('potion', 100, 100);
 	}//end constructor
 
 	/** @method nextLevel
@@ -48,7 +49,7 @@ export default class ENV{
 	nextLevel(){
 		this.level++;
 		if(this.level === 2){
-			this.end = {x: 175, y:450};
+			this.end = {x: 750, y:300};
 			return this.level2;
 		}
 		if(this.level === 3){
@@ -64,7 +65,7 @@ export default class ENV{
 			return this.level5;
 		}
 	}
-	
+
 	render(ctx){
 		ctx.save();
 		ctx.fillStyle = 'lime';
@@ -89,5 +90,4 @@ export default class ENV{
 		ctx.fillRect(this.end.x,this.end.y,10,10);
 		ctx.restore();
 	}
-
 }//end environment

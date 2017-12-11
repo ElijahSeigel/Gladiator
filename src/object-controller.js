@@ -6,8 +6,9 @@ export default class ObjectController {
     this.objects =
       {
         'dashAbility': {
+          'id': 'dash',
           'distance': 10,
-          'img': 'imageHere'
+          'img': 'health.png'
         },
         'ghost': {
           'duration': 100,
@@ -56,8 +57,20 @@ export default class ObjectController {
     });
   }
 
+  removeObject(id){
+    var index;
+    for(var i = 0; i < this.exists.length; i++){
+      if(this.exists[0]['properties']['id'] == id){
+        index = i;
+      }
+    }
+    this.exists.splice(index, 1);
+  }
+
   render(ctx) {
+    console.log('runnig');
     this.exists.forEach((object)=>{
+      console.log('draw potion');
       var img = new Image();
       img.src = '/tiles/' + object['properties']['img'];
       ctx.save();
