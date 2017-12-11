@@ -27,6 +27,7 @@ export default class CollisionController{
 
 	playerObjectCollides(point){
 		var id = false;
+		console.log(this.objects);
 		this.objects.forEach((object) => {
 			//console.log(object);
 			var x = object.x;
@@ -67,9 +68,9 @@ export default class CollisionController{
 	}
 
 	enemyHitsPlayer(point, dmg){
-		if(this.pointInside(point, [ this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
+		if(this.pointInside(point, [this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
 					{x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y + this.player.height},
-					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
+					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height}])) {
 				this.player.health -= dmg;
 				//console.log(this.player.health);
 				return true;

@@ -10,34 +10,27 @@ export default class ObjectController {
           'distance': 10,
           'img': 'health.png'
         },
+        'lightningAbility': {
+          'id': 'lightning',
+          'img': 'electric.png'
+        },
         'ghost': {
+          'id': 'ghost',
           'duration': 100,
           'multiplier': 0.2,
           'img': 'imageHere'
         },
         'speedBoost': {
+          'id': 'speedBoost',
           'duration': 100,
           'multiplier': 2.0,
           'img': 'imageHere'
         },
         'potion': {
+          'id': 'potion',
           'value': 10,
           'healthIncrease': 100,
           'img': 'health.png'
-        },
-        'sword': {
-          'value': 100,
-          'damage': 30,
-          'range': 5,
-          'condition': 100,
-          'img': 'imageHere'
-        },
-        'spear': {
-          'value': 100,
-          'damage': 15,
-          'range': 10,
-          'condition': 100,
-          'img': 'imageHere'
         },
         'goldenGun': {
           'value': 1000,
@@ -55,12 +48,13 @@ export default class ObjectController {
       'x': x,
       'y': y,
     });
+    console.log(this.exists);
   }
 
   removeObject(id){
     var index;
     for(var i = 0; i < this.exists.length; i++){
-      if(this.exists[0]['properties']['id'] == id){
+      if(this.exists[i]['properties']['id'] == id){
         index = i;
       }
     }
@@ -68,13 +62,11 @@ export default class ObjectController {
   }
 
   render(ctx) {
-    console.log('runnig');
     this.exists.forEach((object)=>{
-      console.log('draw potion');
       var img = new Image();
       img.src = '/tiles/' + object['properties']['img'];
       ctx.save();
-      ctx.drawImage(img, object['x'], object['y'], 15, 25);
+      ctx.drawImage(img, object['x'], object['y'], 20, 25);
 			ctx.restore();
     });
   }
