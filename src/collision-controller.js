@@ -27,6 +27,7 @@ export default class CollisionController{
 
 	playerObjectCollides(point){
 		var id = false;
+		console.log(this.objects);
 		this.objects.forEach((object) => {
 			//console.log(object);
 			var x = object.x;

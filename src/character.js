@@ -24,7 +24,7 @@ export default class Character{
 		this.sprite = new Sprite('knight');
 
 		//attack variables
-		this.moves = {sword: false, lightning: false, dash: false};
+		this.moves = {lightning: false, dash: false};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -54,6 +54,11 @@ export default class Character{
 		switch(id) {
 			case 'dash':
 				this.moves['dash'] = true;
+				break;
+			case 'lightning':
+				console.log('apply lighnitn');
+				this.moves['lightning'] = true;
+				break;
 		}
 	}
 
