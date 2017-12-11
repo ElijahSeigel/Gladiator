@@ -12,7 +12,7 @@ export default class ObjectController {
         },
         'lightningAbility': {
           'id': 'lightning',
-          'img': 'health.png'
+          'img': 'electric.png'
         },
         'ghost': {
           'id': 'ghost',
@@ -66,7 +66,7 @@ export default class ObjectController {
       var img = new Image();
       img.src = '/tiles/' + object['properties']['img'];
       ctx.save();
-      ctx.drawImage(img, object['x'], object['y'], 15, 25);
+      ctx.drawImage(img, object['x'], object['y'], 20, 25);
 			ctx.restore();
     });
   }
