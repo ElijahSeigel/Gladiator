@@ -15,6 +15,7 @@ export default class Enemy {
         this.movementSpeed = movementSpeed;
 		this.health = 100;
 		this.collisionController = collision;
+		this.attackAgain = 0;
 
         this.frames = 0;
         this.mirrored = false;
@@ -26,10 +27,28 @@ export default class Enemy {
 			var characterDistanceSquared = Math.pow((characterPosition.x - this.position.x), 2) + Math.pow((characterPosition.y - this.position.y), 2)
 			if (characterDistanceSquared < Math.pow(this.awarenessRadius, 2)) {
 				// Enemy is aware
+				if(this.attackAgain >0){this.attackAgain --;}
+				else{
+					this.attackAgain = 7;//where 7 is the number of frames for the attack animation
+					var point1;
+					var point2;
+					if(!this.sprite.reversed){
+						point1 = {x: this.position.x+this.width+20, y: this.position.y+this.height/2};//20 is the range of the attack
+						point2 = {x: this.position.x+this.width, y: this.position.y+this.height/2};
+					}else{
+						point1 = {x: this.position.x-20, y: this.position.y+this.height/2};//20 is the range of the attack
+						point2 = {x: this.position.x, y: this.position.y+this.height/2};
+					}
+					if(!this.collisionController.enemyHitsPlayer(point1, 25)){
+						this.collisionController.enemyHitsPlayer(point2, 25)
+					}//where 25 is the damage done
+				}
+					this.sprite.setState('attack');
 			} else {
 				// Move
 				var stepIndex = !this.mirrored ? Math.floor(this.frames / this.framesPerStep) : this.movementPattern.length - Math.floor(this.frames / this.framesPerStep) - 1;
 				var step = this.movementPattern[stepIndex];
+				this.movementSpeed > 2 ? this.sprite.setState('run') : this.sprite.setState('walk');
 				switch(step) {
 					case 'L':
 					case 'l':
@@ -50,14 +69,6 @@ export default class Enemy {
 							this.position.x -= this.movementSpeed;
 							this.sprite.reverse(true);
 						}
-						break;
-					case 'U':
-					case 'u':
-						!this.mirrored ? this.position.y -= this.movementSpeed : this.position.y += this.movementSpeed;
-						break;
-					case 'D':
-					case 'd':
-						!this.mirrored ? this.position.y += this.movementSpeed : this.position.y -= this.movementSpeed;
 						break;
 					default:
 						break;
