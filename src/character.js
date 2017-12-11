@@ -34,6 +34,14 @@ export default class Character{
 		this.render = this.render.bind(this);
 
 	}//end constructor
+	
+	/** @method warpToStart
+	* Used at the end of each level to move character to start of next level
+	*/
+	warpToStart(x,y){
+		this.positionVector.x = x;
+		this.positionVector.y = y;
+	}
 
 	//update the character based on input
 	update(input){
