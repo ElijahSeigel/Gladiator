@@ -27,14 +27,17 @@ export default class Game{
 
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
-			[], [], [], []
+			null, [], [], [], []
 		]
 		// Level 1 enemies
 		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 40, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
 		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 40, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
 		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 40, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
-
+		this.enemies[2].push(new Enemy(150, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(450, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(750, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(1050, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
 		// Level 3 enemies
 
 		this.player = new Character (1370, 420, this.collisionControl);
@@ -64,7 +67,7 @@ export default class Game{
 
 		// Initialize level art
 		this.image = new Image();
-		this.image.src = "/levelArt/level1.png";
+		this.image.src = "/levelArt/level" + this.level + ".png";
 
 		// Bind class functions
 		this.handleInput = this.handleInput.bind(this);
@@ -166,7 +169,6 @@ export default class Game{
 	//render the game world
 	render() {
 
-		//console.log(this.image.src)
 		this.backBufferContext.drawImage(this.image, 0, 0);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
 		this.player.render(this.backBufferContext);
