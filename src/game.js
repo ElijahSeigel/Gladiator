@@ -29,10 +29,6 @@ export default class Game{
 		this.enemies = [
 			[], [], [], []
 		]
-		// Level 0 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 40, ['R'], true, 100, 2, this.collisionControl))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 40, ['R'], true, 100, 2, this.collisionControl))
-		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 40, ['R'], true, 100, 2, this.collisionControl))
 		// Level 1 enemies
 		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 40, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
 		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 40, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
