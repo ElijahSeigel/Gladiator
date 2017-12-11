@@ -54,6 +54,11 @@ export default class Character{
 		switch(id) {
 			case 'dash':
 				this.moves['dash'] = true;
+				break;
+			case 'lightning':
+				console.log('apply lighnitn');
+				this.moves['lightning'] = true;
+				break;
 		}
 	}
 

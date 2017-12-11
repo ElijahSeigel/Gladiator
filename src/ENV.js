@@ -9,6 +9,7 @@ export default class ENV{
 		this.level = 1;
 		this.end = {x: 1275, y: 450};
 		this.objectController.newObject('dashAbility', 400, 453);
+		this.objectController.newObject('lightningAbility', 700, 453);
 		this.objects = this.objectController.exists;
 		this.level1 = [
 						[{x: 0,y: 650}, {x: 0,y: 416}, {x: 287,y: 416}, {x: 287,y: 449}, {x: 319,y: 449}, {x: 319,y: 480}, {x: 1217,y: 480}, {x: 1217,y: 449}, {x: 1247,y: 449}, {x: 1247,y: 416}, {x: 1279,y: 416}, {x: 1279,y: 449}, {x: 1311,y: 449}, {x: 1311,y: 480}, {x: 1500,y: 480}, {x: 1500,y: 650}],
