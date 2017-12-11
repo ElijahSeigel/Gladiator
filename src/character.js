@@ -201,6 +201,9 @@ export default class Character{
 					this.sprite.setState('lightning');
 					stateSet = true;
 				}
+				if(this.positionVector.x>1500 || this.positionVector.x<0 || this.positionVector.y>650 || this.positionVector.y<0){
+					this.health--;
+				}
 			}
 			if (!stateSet && this.canJump && this.attackAgain === 0) this.sprite.setState('idle');
 		}
