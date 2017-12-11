@@ -23,7 +23,7 @@ export default class Enemy {
         movementSpeed > 2 ? this.sprite.setState('run') : this.sprite.setState('walk');
     }
     update(characterPosition) {
-        if(this.health>0){
+        if (this.health>0) {
 			var characterDistanceSquared = Math.pow((characterPosition.x - this.position.x), 2) + Math.pow((characterPosition.y - this.position.y), 2)
 			if (characterDistanceSquared < Math.pow(this.awarenessRadius, 2)) {
 				// Enemy is aware
