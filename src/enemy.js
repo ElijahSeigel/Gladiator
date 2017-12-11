@@ -39,11 +39,11 @@ export default class Enemy {
 						point1 = {x: this.position.x-20, y: this.position.y+this.height/2};//20 is the range of the attack
 						point2 = {x: this.position.x, y: this.position.y+this.height/2};
 					}
-					if(!this.collisionController.enemyHitsPlayer(point1, 25)){
-						this.collisionController.enemyHitsPlayer(point2, 25)
+					if(!this.collisionController.enemyHitsPlayer(point1, 5)){
+						this.collisionController.enemyHitsPlayer(point2, 5)
 					}//where 25 is the damage done
 				}
-					this.sprite.setState('attack');
+				this.sprite.setState('attack');
 			} else {
 				// Move
 				var stepIndex = !this.mirrored ? Math.floor(this.frames / this.framesPerStep) : this.movementPattern.length - Math.floor(this.frames / this.framesPerStep) - 1;
