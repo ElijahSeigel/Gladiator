@@ -6,7 +6,7 @@ export default class ENV{
 	constructor(hght, wdth,level){
 		this.height = hght;
 		this.width = wdth;
-		this.level = 4;
+		this.level = 1;
 		this.end = {x: 1275, y: 450};
 		this.level1 = [
 						[{x: 0,y: 650}, {x: 0,y: 416}, {x: 287,y: 416}, {x: 287,y: 449}, {x: 319,y: 449}, {x: 319,y: 480}, {x: 1217,y: 480}, {x: 1217,y: 449}, {x: 1247,y: 449}, {x: 1247,y: 416}, {x: 1279,y: 416}, {x: 1279,y: 449}, {x: 1311,y: 449}, {x: 1311,y: 480}, {x: 1500,y: 480}, {x: 1500,y: 650}],
@@ -48,19 +48,20 @@ export default class ENV{
 	nextLevel(){
 		this.level++;
 		if(this.level === 2){
-			
+			this.end = {x: 175, y:450};
+			return this.level2;
 		}
 		if(this.level === 3){
 			this.end = {x: 75, y: 100};
-			return this.level2;
+			return this.level3;
 		}
 		else if(this.level === 4){
 			this.end = {x: 750, y: 50};
-			return this.level3;
+			return this.level4;
 		}
 		else{
 			this.end = {x: 1275, y: 450};
-			return this.level4;
+			return this.level5;
 		}
 	}
 	

@@ -156,9 +156,9 @@ export default class Game{
 	//function to update the game world
   update() {
 			this.player.update(this.input);
-			if(this.player.positionVector.x === this.environment.end.x && this.player.positionVector.y === this.environment.end.y){
+			/*if(this.collisionControl){
 				this.nextLevel();
-			}
+			}*/
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
   }//end update
