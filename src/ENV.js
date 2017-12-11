@@ -7,8 +7,7 @@ export default class ENV{
 		this.width = wdth;
 		this.objectController = objectController;
 		this.level = 1;
-		this.end = {x: 1275, y: 450};
-		console.log(level);
+		this.end = {x: 1370, y: 160};
 		this.level1 = [
 						[{x: 0,y: 650}, {x: 0,y: 416}, {x: 287,y: 416}, {x: 287,y: 449}, {x: 319,y: 449}, {x: 319,y: 480}, {x: 1217,y: 480}, {x: 1217,y: 449}, {x: 1247,y: 449}, {x: 1247,y: 416}, {x: 1279,y: 416}, {x: 1279,y: 449}, {x: 1311,y: 449}, {x: 1311,y: 480}, {x: 1500,y: 480}, {x: 1500,y: 650}],
 						[{x: 352,y: 404}, {x: 352,y: 375}, {x: 384,y: 374}, {x: 384,y: 342}, {x: 448,y: 342}, {x: 448,y: 303}, {x: 514,y: 303}, {x: 514,y: 277}, {x: 546,y: 277}, {x: 546,y: 245}, {x: 577,y:245 }, {x: 577,y: 220}, {x: 950,y: 220}, {x: 950,y: 244}, {x: 983,y: 244}, {x: 983,y: 277}, {x: 1014,y: 277}, {x: 1014,y: 303}, {x: 1080,y: 303}, {x: 1080,y: 341}, {x: 1144,y: 341}, {x: 1144,y: 374}, {x: 1176,y: 374}, {x: 1176,y: 404}],
@@ -18,26 +17,26 @@ export default class ENV{
 						];
 		this.objectController.newObject('dashAbility', 300, 500);
 		this.objects = this.objectController.exists;
-		this.level2 = [[{x: 0, y: hght-50}, {x: 0, y: hght}, {x: wdth, y: hght}, {x: wdth, y: hght-50}],
-							[{x: 0, y: 450},{x: 0, y: 500},{x: 1300, y: 500},{x: 1300, y: 450}],
-							[{x: 200, y: 300},{x: 200, y: 350},{x: 1500, y: 350},{x: 1500, y: 300}]];
-		this.level3 = [[{x: 0, y: hght-50}, {x: 0, y: hght}, {x: wdth, y: hght}, {x: wdth, y: hght-50}],
+		this.level2 = [[{x: 0, y: 610}, {x: 0, y: 650}, {x: wdth, y: 650}, {x: wdth, y: 610}],
+							[{x: 0, y: 380},{x: 0, y: 445},{x: 950, y: 445},{x: 950, y: 380}],
+							[{x: 475, y: 168},{x: 475, y: 225},{x: 1500, y: 225},{x: 1500, y: 168}]];
+		/*this.level3 = [[{x: 0, y: hght-50}, {x: 0, y: hght}, {x: wdth, y: hght}, {x: wdth, y: hght-50}],
 						[{x: 0, y: 450}, {x: 0, y: 500}, {x: 300, y: 500}, {x: 300, y: 450}],
 						[{x: 0, y: 150}, {x: 0, y: 200}, {x: 300, y: 200}, {x: 300, y: 150}],
 						[{x: 700, y: 450}, {x: 700, y: 500}, {x: 1000, y: 500}, {x: 1000, y: 450}],
 						[{x: 1100, y: 300}, {x: 1100, y: 350}, {x: 1500, y: 350}, {x: 1500, y: 300}],
-						[{x: 500, y: 150}, {x: 500, y: 200}, {x: 950, y: 200}, {x: 950, y: 150}]];
-		this.level4 = [[{x: 250, y: hght-50}, {x: 250, y: hght}, {x: wdth-250, y: hght}, {x: wdth-250, y: hght-50}],
-						[{x: 0, y: 450}, {x: 0, y: 500}, {x: 400, y: 500}, {x: 400, y: 450}],
-						[{x: 1100, y: 450}, {x: 1100, y: 500}, {x: 1500, y: 500}, {x: 1500, y: 450}],
-						[{x: 600, y: 100}, {x: 600, y: 150}, {x: 900, y: 150}, {x: 900, y: 100}],
-						[{x: 300, y: 300}, {x: 300, y: 350}, {x: 600, y: 350}, {x: 600, y: 300}],
-						[{x: 900, y: 275}, {x: 900, y: 325}, {x: 1200, y: 325}, {x: 1200, y: 275}]];
-		this.level5 = [[{x: 250, y: hght-150},{x: 250, y: hght},{x: 300, y: hght},{x: 300, y: hght-150}],
-						[{x: 500, y: hght-150},{x: 500, y: hght},{x: 550, y: hght},{x: 550, y: hght-150}],
-						[{x: 750, y: hght-150},{x: 750, y: hght},{x: 800, y: hght},{x: 800, y: hght-150}],
-						[{x: 1000, y: hght-150},{x: 1000, y: hght},{x: 1050, y: hght},{x: 1050, y: hght-150}],
-						[{x: 1250, y: hght-150},{x: 1250, y: hght},{x: 1300, y: hght},{x: 1300, y: hght-150}]];
+						[{x: 500, y: 150}, {x: 500, y: 200}, {x: 950, y: 200}, {x: 950, y: 150}]];*/
+		this.level3 = [[{x: 520, y: 584}, {x: 520, y: 650}, {x: 975, y: 650}, {x: 975, y: 584}],
+						[{x: 0, y: 450}, {x: 0, y: 514}, {x: 450, y: 514}, {x: 450, y: 450}],
+						[{x: 1040, y: 450}, {x: 1040, y: 514}, {x: 1500, y: 514}, {x: 1500, y: 450}],
+						[{x: 650, y: 200}, {x: 650, y: 264}, {x: 845, y: 264}, {x: 845, y: 200}],
+						[{x: 355, y: 300}, {x: 355, y: 364}, {x: 675, y: 364}, {x: 675, y: 300}],
+						[{x: 820, y: 305}, {x: 820, y: 369}, {x: 1145, y: 369}, {x: 1145, y: 305}]];
+		this.level4 = [[{x: 200, y: hght-256},{x: 200, y: hght},{x: 264, y: hght},{x: 264, y: hght-256}],
+						[{x: 425, y: hght-256},{x: 425, y: hght},{x: 489, y: hght},{x: 489, y: hght-256}],
+						[{x: 700, y: hght-256},{x: 700, y: hght},{x: 764, y: hght},{x: 764, y: hght-256}],
+						[{x: 1025, y: hght-256},{x: 1025, y: hght},{x: 1089, y: hght},{x: 1089, y: hght-256}],
+						[{x: 1345, y: hght-256},{x: 1345, y: hght},{x: 1409, y: hght},{x: 1409, y: hght-256}]];
 		this.render = this.render.bind(this);
 		this.nextLevel = this.nextLevel.bind(this);
 	}//end constructor
@@ -49,20 +48,19 @@ export default class ENV{
 	nextLevel(){
 		this.level++;
 		if(this.level === 2){
-			this.end = {x: 750, y:300};
+			this.end = {x: 1350, y:125};
 			return this.level2;
 		}
 		if(this.level === 3){
-			this.end = {x: 75, y: 100};
+			this.end = {x: 750, y: 175};
 			return this.level3;
 		}
 		else if(this.level === 4){
-			this.end = {x: 750, y: 50};
+			this.end = {x: 1365, y: 370};
 			return this.level4;
 		}
 		else{
-			this.end = {x: 1275, y: 450};
-			return this.level5;
+			return [];
 		}
 	}
 
@@ -87,7 +85,7 @@ export default class ENV{
 			ctx.closePath();
 			//ctx.fillRect(50, 600, 1400, 50);
 		});
-		ctx.fillRect(this.end.x,this.end.y,10,10);
+		ctx.fillRect(this.end.x,this.end.y,20,20);
 		ctx.restore();
 	}
 }//end environment
