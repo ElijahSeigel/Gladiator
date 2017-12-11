@@ -68,7 +68,9 @@ export default class ObjectController {
   }
 
   render(ctx) {
+    console.log('runnig');
     this.exists.forEach((object)=>{
+      console.log('draw potion');
       var img = new Image();
       img.src = '/tiles/' + object['properties']['img'];
       ctx.save();

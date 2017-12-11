@@ -20,8 +20,8 @@ export default class Game{
 
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
-		this.environment = new Environment(this.height, this.width, this.level);
 		this.objectController = new ObjectController();
+		this.environment = new Environment(this.height, this.width, this.level, this.objectController);
 		this.collisionControl.addEnvironment(this.environment.borders);
 		this.collisionControl.addObjects(this.environment.objects);
 
@@ -30,57 +30,20 @@ export default class Game{
 			[], [], [], []
 		]
 		// Level 0 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2))
-		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2))
+		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2, this.collisionControl))
+		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2, this.collisionControl))
+		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2, this.collisionControl))
 		// Level 1 enemies
-		this.enemies[1].push(new Enemy(218, 166, 20, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
-		this.enemies[1].push(new Enemy(1059, 166, 20, 20, 'ork1', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
-		this.enemies[1].push(new Enemy(714, 452, 20, 20, 'ork1', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
+		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
+		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
+		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
 
 		// Level 3 enemies
 
-
-		this.maps = [
-			// Level Zero
-			[
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10,  1,  1,  1,  1,  1,  1, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-				[ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 1 ]
-			],
-			// Level One
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-			// Level Two
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-			// Level Three
-			[
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10],
-				[ 1,  1,  1, 10, 10, 10,  1,  1,  1, 10, 10, 10]
-			],
-		]
-
-		this.player = new Character (1000, 100, this.collisionControl);
-		this.player.addObjectController(this.environment.objectController);
-		//this.collisionControl.addPlayer(this.player);
+		this.player = new Character (1370, 420, this.collisionControl);
+		this.player.addObjectController(this.objectController);
+		this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		this.collisionControl.addPlayer(this.player);
 
@@ -103,7 +66,11 @@ export default class Game{
 		message.textContent = "";
 		document.body.appendChild(message);
 
-		//bind class functions
+		// Initialize level art
+		this.image = new Image();
+		this.image.src = "/levelArt/level1.png";
+
+		// Bind class functions
 		this.handleInput = this.handleInput.bind(this);
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
@@ -113,14 +80,15 @@ export default class Game{
 		window.onkeydown = this.handleInput;
 		window.onkeyup = this.handleInput;
 
-
 		// Start the game loop
-		this.nextLevel();
-		this.collisionControl.addEnemies(this.enemies[this.level]);
-		this.interval = setInterval(this.loop, 30);
+		setTimeout(() => {
 
-
-
+			// Set call some functions
+			this.nextLevel();
+			this.render();
+			this.collisionControl.addEnemies(this.enemies[this.level]);
+			this.interval = setInterval(this.loop, 30);
+		}, 3000)
 
 	}//end constructor
 
@@ -205,23 +173,11 @@ export default class Game{
 	//render the game world
 	render() {
 
-		this.backBufferContext.fillStyle = '#000';
-		this.backBufferContext.fillRect(0, 0, this.width, this.height);
-
-		this.maps[this.level].forEach((row, y) => {
-			row.forEach((tile, x) => {
-				var img = new Image();
-				img.src = "/tiles/tile_" + tile + ".png";
-				var tileWidth  = this.width  / row.length;
-				var tileHeight = this.height / this.maps[this.level].length;
-				this.backBufferContext.drawImage(img, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-			})
-		})
-
-		this.player.render(this.backBufferContext);
+		//console.log(this.image.src)
+		this.backBufferContext.drawImage(this.image, 0, 0);
 		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
-		//this.environment.render(this.backBufferContext);
-
+		this.player.render(this.backBufferContext);
+		this.objectController.render(this.backBufferContext);
 		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
 		//display game over and message
@@ -280,6 +236,8 @@ export default class Game{
 
 	nextLevel() {
 		this.level++;
+		this.image.src = "/levelArt/level" + this.level + ".png";
+		//console.log(this.level)
 		// call env method to change background
 		// change character location
 	}

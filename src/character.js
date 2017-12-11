@@ -96,6 +96,7 @@ export default class Character{
 		if(this.attackAgain===0){//don't want to move during attack
 			if(input.includes("right")){
 				this.direction = "right";
+				this.sprite.reverse(false);
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x + this.width, y: this.positionVector.y})){
 					this.positionVector.x += this.velocityVector.x;
 					this.sprite.setState('run');
@@ -112,6 +113,7 @@ export default class Character{
 			}
 			else if (input.includes("left")){
 				this.direction = "left";
+				this.sprite.reverse(true);
 				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x, y: this.positionVector.y})){
 					this.positionVector.x -= this.velocityVector.x;
 					this.sprite.setState('run');
@@ -138,40 +140,57 @@ export default class Character{
 		if(this.invincible >0){
 			this.invincible --;
 			if(this.direction === "right"){
-				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + 10*this.velocityVector.x +this.width , y: this.positionVector.y + this.height/2})){
-
-					this.positionVector.x += 10*this.velocityVector.x;
-				}else{
-					for(i = this.velocityVector.x*10 - 1; i>0; i--){
-						if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i , y: this.positionVector.y + this.height/2})){
-							this.positionVector.x += i;
-						}
-					}
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x*10 + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + this.velocityVector.x*10 + this.width, y: this.positionVector.y})){
+					this.positionVector.x += this.velocityVector.x*10;
+					this.sprite.setState('run');
+					stateSet = true;
 				}
-			}else{
-				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - 10*this.velocityVector.x, y: this.positionVector.y + this.height/2})){
-					this.positionVector.x -= 10*this.velocityVector.x;
-				}else{
-					for(i = this.velocityVector.x*10 - 1; i>0; i--){
-						if(this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i , y: this.positionVector.y + this.height/2})){
-							this.positionVector.x -= i;
+				else{
+					for(i = this.velocityVector.x*10 - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x + i + this.width, y: this.positionVector.y})){
+							this.positionVector.x += i;
+							break;
 						}
 					}
 				}
 			}
+			else {
+				if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x*10, y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - this.velocityVector.x*10, y: this.positionVector.y})){
+					this.positionVector.x -= this.velocityVector.x*10;
+					this.sprite.setState('run');
+					stateSet = true;
+				}
+				else{
+					for(i = this.velocityVector.x*10 - 1; i>=0; i--){
+						if(!this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y + this.height}) && !this.collisionController.playerEnvironmentCollides({x: this.positionVector.x - i ,y: this.positionVector.y})){
+							this.positionVector.x -= i;
+							break;
+						}
+					}
+				}
+			}
+			
+			
 		}
 
 		//attack some stuff
 		if(this.attackAgain === 0){
 			if(input.includes("punch") && this.moves.punch){
-				this.attackAgain = 5;//where 5 is the number of frames for the punch animation
-				var point;
+				this.attackAgain = 7;//where 7 is the number of frames for the attack animation
+				var point1;
+				var point2;
 				if(this.direction = "right"){
-					point = {}
+					point1 = {x: this.positionVector.x+this.width+20, y: this.positionVector.y+this.height/2};//20 is the range of the attack
+					point2 = {x: this.positionVector.x+this.width, y: this.positionVector.y+this.height/2};
 				}else{
-					
+					point1 = {x: this.positionVector.x-20, y: this.positionVector.y+this.height/2};//20 is the range of the attack
+					point1 = {x: this.positionVector.x, y: this.positionVector.y+this.height/2};
 				}
-				this.collisionController.playerHitsEnemy(point, 25);//where 50 is the range of the attack and 25 is the damage done
+				if(!this.collisionController.playerHitsEnemy(point1, 25)){
+					this.collisionController.playerHitsEnemy(point2, 25)
+				}//where 25 is the damage done
+				this.sprite.setState('attack');
+				stateSet = true;
 			}
 			else if(input.includes("sword") && this.moves.sword){
 				this.attackAgain = 10;//where 5 is the number of frames for the punch animation
@@ -182,7 +201,7 @@ export default class Character{
 				//this.collisionController.checkHit(this.positionVector.x, this.positionVector.y, 150, this.direction, 100);//where 150 is the range of the attack and 100 is the damage done
 			}
 		}
-		if (!stateSet && this.canJump) this.sprite.setState('idle');
+		if (!stateSet && this.canJump && this.attackAgain === 0) this.sprite.setState('idle');
 		this.sprite.update();
 
 		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x - this.width/2, y: this.positionVector.y + this.height/2 + 20});
@@ -195,8 +214,8 @@ export default class Character{
 	//render the character
 	render(ctx){
 		ctx.save();
-		//ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
 		this.sprite.render(ctx, this.positionVector.x, this.positionVector.y);
+		//ctx.fillRect(this.positionVector.x, this.positionVector.y, this.width, this.height);
 		ctx.restore();
 	}//end render
 

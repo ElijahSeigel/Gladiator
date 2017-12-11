@@ -55,11 +55,26 @@ export default class CollisionController{
 
 	playerHitsEnemy(point, dmg){
 		this.enemies.forEach((enemy)=>{
-			if(this.pointInside(point, [enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y}, {x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height}, {x:enemy.position.x,y: enemy.position.y + height}])) {
+			if(this.pointInside(point, [ enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y},
+					{x:enemy.position.x + enemy.width,y: enemy.position.y + enemy.height},
+					{x:enemy.position.x,y: enemy.position.y + enemy.height} ])) {
 				enemy.health -= dmg;
-				console.log('hit');
+				console.log(enemy.health);
+				return true;
 			}
 		});
+		return false;
+	}
+
+	enemyHitsPlayer(point, dmg){
+		if(this.pointInside(point, [ this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
+					{x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y + this.player.height},
+					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
+				this.player.health -= dmg;
+				//console.log(this.player.health);
+				return true;
+			}
+			return false;
 	}
 
   //0 -> colinear, 1 -> clockwise, 2 -> counterclockwise
