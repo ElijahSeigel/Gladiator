@@ -36,6 +36,14 @@ export default class Character{
 		this.render = this.render.bind(this);
 
 	}//end constructor
+	
+	/** @method warpToStart
+	* Used at the end of each level to move character to start of next level
+	*/
+	warpToStart(x,y){
+		this.positionVector.x = x;
+		this.positionVector.y = y;
+	}
 
 	addObjectController(controller){
 		this.objectController = controller;
@@ -214,6 +222,9 @@ export default class Character{
 					}//where 25 is the damage done
 					this.sprite.setState('lightning');
 					stateSet = true;
+				}
+				if(this.positionVector.x>1500 || this.positionVector.x<0 || this.positionVector.y>650 || this.positionVector.y<0){
+					this.health--;
 				}
 			}
 			if (!stateSet && this.canJump && this.attackAgain === 0) this.sprite.setState('idle');

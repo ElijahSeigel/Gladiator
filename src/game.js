@@ -159,6 +159,9 @@ export default class Game{
 	//function to update the game world
   update() {
 			this.player.update(this.input);
+			if(this.player.positionVector.x === this.environment.end.x && this.player.positionVector.y === this.environment.end.y){
+				this.nextLevel();
+			}
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
   }//end update
@@ -258,6 +261,11 @@ export default class Game{
 	nextLevel() {
 		this.level++;
 		this.image.src = "/levelArt/level" + this.level + ".png";
+		this.collisionControl.addEnvironment(this.environment.nextLevel());
+		if(this.level === 1)this.player.warpToStart(100,250);
+		else if(this.level === 2)this.player.warpToStart(750,400);
+		else if(this.level === 3)this.player.warpToStart(300,275);
+		else return;//win the game
 		//console.log(this.level)
 		// call env method to change background
 		// change character location
