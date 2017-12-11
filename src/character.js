@@ -24,7 +24,7 @@ export default class Character{
 		this.sprite = new Sprite('knight');
 
 		//attack variables
-		this.moves = {sword: false, lightning: false, dash: false};
+		this.moves = {sword: true, lightning: false, dash: false};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -195,7 +195,7 @@ export default class Character{
 						point2 = {x: this.positionVector.x+this.width, y: this.positionVector.y+this.height/2};
 					}else{
 						point1 = {x: this.positionVector.x-20, y: this.positionVector.y+this.height/2};//20 is the range of the attack
-						point1 = {x: this.positionVector.x, y: this.positionVector.y+this.height/2};
+						point2 = {x: this.positionVector.x, y: this.positionVector.y+this.height/2};
 					}
 					if(!this.collisionController.playerHitsEnemy(point1, 25)){
 						this.collisionController.playerHitsEnemy(point2, 25)
