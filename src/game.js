@@ -162,7 +162,7 @@ export default class Game{
 			}
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
-			
+
   }//end update
 
 	//render the game world
