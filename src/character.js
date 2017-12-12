@@ -9,6 +9,8 @@ export default class Character{
 		this.width = 20; //subject to change based on sprite
 		this.health = 100;//subject to change
 		this.invincible = 0;
+		this.lives = 3;
+		this.objectController;
 		this.dying = 7;
 		this.over = false;
 
@@ -22,7 +24,7 @@ export default class Character{
 		this.sprite = new Sprite('knight');
 
 		//attack variables
-		this.moves = {sword: true, lightning: true, dash: true};
+		this.moves = {jump: false, sword: true, lightning: false, dash: false};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -34,6 +36,33 @@ export default class Character{
 		this.render = this.render.bind(this);
 
 	}//end constructor
+
+	/** @method warpToStart
+	* Used at the end of each level to move character to start of next level
+	*/
+	warpToStart(x,y){
+		this.positionVector.x = x;
+		this.positionVector.y = y;
+	}
+
+	addObjectController(controller){
+		this.objectController = controller;
+	}
+
+	applyObject(id){
+		this.objectController.removeObject(id);
+		switch(id) {
+			case 'dash':
+				this.moves['dash'] = true;
+				break;
+			case 'lightning':
+				this.moves['lightning'] = true;
+				break;
+			case 'jump':
+				this.moves['jump'] = true;
+				break;
+		}
+	}
 
 	//update the character based on input
 	update(input){
@@ -158,8 +187,8 @@ export default class Character{
 						}
 					}
 				}
-				
-				
+
+
 			}
 
 			//attack some stuff
@@ -173,7 +202,7 @@ export default class Character{
 						point2 = {x: this.positionVector.x+this.width, y: this.positionVector.y+this.height/2};
 					}else{
 						point1 = {x: this.positionVector.x-20, y: this.positionVector.y+this.height/2};//20 is the range of the attack
-						point1 = {x: this.positionVector.x, y: this.positionVector.y+this.height/2};
+						point2 = {x: this.positionVector.x, y: this.positionVector.y+this.height/2};
 					}
 					if(!this.collisionController.playerHitsEnemy(point1, 25)){
 						this.collisionController.playerHitsEnemy(point2, 25)
@@ -201,6 +230,9 @@ export default class Character{
 					this.sprite.setState('lightning');
 					stateSet = true;
 				}
+				if(this.positionVector.x>1500 || this.positionVector.x<0 || this.positionVector.y>650 || this.positionVector.y<0){
+					this.health--;
+				}
 			}
 			if (!stateSet && this.canJump && this.attackAgain === 0) this.sprite.setState('idle');
 		}
@@ -212,6 +244,12 @@ export default class Character{
 			}
 		}
 		this.sprite.update();
+
+		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x - this.width/2, y: this.positionVector.y + this.height/2 + 20});
+		if(objectCollidesId){
+			console.log(objectCollidesId);
+			this.applyObject(objectCollidesId);
+		}
 	}//end update
 
 	//render the character

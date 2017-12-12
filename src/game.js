@@ -2,6 +2,7 @@
 //beta to develop character
 import Character from './character';
 import CollisionController from './collision-controller';
+import ObjectController from './object-controller';
 import Environment from './ENV';
 import Enemy from './enemy'
 
@@ -9,7 +10,7 @@ export default class Game{
 	constructor(){
 		//initializing boring state variables
 		this.over = false;
-		this.level = 0;
+		this.level = 1;
 		this.paused = true;
 		this.input = [];
 
@@ -19,27 +20,28 @@ export default class Game{
 
 		//construct game entities and collision control
 		this.collisionControl = new CollisionController();
-		this.environment = new Environment(this.height, this.width, this.level);
-		this.collisionControl.addEnvironment(this.environment.borders);
+		this.objectController = new ObjectController();
+		this.environment = new Environment(this.height, this.width, this.level, this.objectController);
+		this.collisionControl.addEnvironment(this.environment.level1);
+		this.collisionControl.addObjects(this.environment.objects);
 
 		// Add enemies for 4 (tentative) levels
 		this.enemies = [
-			[], [], [], []
+			null, [], [], [], []
 		]
-		// Level 0 enemies
-		this.enemies[0].push(new Enemy(300, 300, 100, 100, 'ork1', 10, ['R'], true, 100, 2, this.collisionControl))
-		this.enemies[0].push(new Enemy(500, 300, 100, 100, 'ork2', 10, ['R'], true, 100, 2, this.collisionControl))
-		this.enemies[0].push(new Enemy(300, 100, 100, 100, 'ork3', 10, ['R'], true, 100, 2, this.collisionControl))
 		// Level 1 enemies
-		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 10, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
-		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 10, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
-		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 10, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
+		this.enemies[1].push(new Enemy(218, 166, 30, 20, 'ork1', 40, ['R', 'L', 'R'], true, 100, 2, this.collisionControl));
+		this.enemies[1].push(new Enemy(1059, 166, 30, 20, 'ork2', 40, ['R', 'R', 'L'], true, 100, 1, this.collisionControl));
+		this.enemies[1].push(new Enemy(714, 452, 30, 20, 'ork3', 40, ['R', 'L', 'L'], true, 100, 4, this.collisionControl));
 		// Level 2 enemies
-		
+		this.enemies[2].push(new Enemy(150, 585, 30, 20, 'ork2', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(450, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(750, 585, 30, 20, 'ork1', 40, ['R'], true, 100, 3, this.collisionControl))
+		this.enemies[2].push(new Enemy(1050, 585, 30, 20, 'ork3', 40, ['R'], true, 100, 3, this.collisionControl))
 		// Level 3 enemies
-		
 
 		this.player = new Character (1370, 420, this.collisionControl);
+		this.player.addObjectController(this.objectController);
 		this.collisionControl.addPlayer(this.player);
 		//TO DO: ADD AI AND ADD AI TO collisionController
 		this.collisionControl.addPlayer(this.player);
@@ -62,16 +64,17 @@ export default class Game{
 		message.id = "message";
 		message.textContent = "";
 		document.body.appendChild(message);
-		
+
 		// Initialize level art
 		this.image = new Image();
-		this.image.src = "/levelArt/level1.png";
+		this.image.src = "/levelArt/level" + this.level + ".png";
 
 		// Bind class functions
 		this.handleInput = this.handleInput.bind(this);
 		this.update = this.update.bind(this);
 		this.render = this.render.bind(this);
 		this.loop = this.loop.bind(this);
+		this.nextLevel = this.nextLevel.bind(this);
 
 		// Set up event handlers
 		window.onkeydown = this.handleInput;
@@ -81,12 +84,12 @@ export default class Game{
 		setTimeout(() => {
 
 			// Set call some functions
-			this.nextLevel();
+			//this.nextLevel();
 			this.render();
 			this.collisionControl.addEnemies(this.enemies[this.level]);
 			this.interval = setInterval(this.loop, 30);
-		}, 3000)
-		
+		}, 1500)
+
 	}//end constructor
 
 	  //function which builds a list of input
@@ -156,31 +159,36 @@ export default class Game{
 	//function to update the game world
   update() {
 			this.player.update(this.input);
+			//checks for end of level
+			if(this.collisionControl.pointInside(this.environment.end,[{x:this.player.positionVector.x, y:this.player.positionVector.y},{x:this.player.positionVector.x + this.player.width, y:this.player.positionVector.y},{x:this.player.positionVector.x + this.player.width, y:this.player.positionVector.y - this.player.height},{x:this.player.positionVector.x, y:this.player.positionVector.y - this.player.height}])){
+				this.nextLevel();
+			}
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
+
   }//end update
 
 	//render the game world
 	render() {
-		if(!this.over){
-			//console.log(this.image.src)
-			this.backBufferContext.drawImage(this.image, 0, 0);
-			this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
-			this.player.render(this.backBufferContext);
-			this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
 
-			//display game over and message
-			if(this.player.over){
-				this.over = true;
-				this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
-				this.screenBufferContext.fillRect(0,0, this.width, this.height);
-				this.screenBufferContext.fillStyle = "white";
-				this.screenBufferContext.strokeStyle = "black";
-				this.screenBufferContext.fillText("Game Over", 20, 200);
-				this.screenBufferContext.strokeText("Game Over", 20, 200);
-			}
+		this.backBufferContext.drawImage(this.image, 0, 0);
+		this.enemies[this.level].forEach(enemy => enemy.render(this.backBufferContext));
+		this.player.render(this.backBufferContext);
+		this.objectController.render(this.backBufferContext);
+		this.screenBufferContext.drawImage(this.backBufferCanvas,0,0);
+
+		//display game over and message
+		if(this.player.over){
+			this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
+			this.screenBufferContext.fillRect(0,0, this.width, this.height);
+			this.screenBufferContext.fillStyle = "red";
+			this.screenBufferContext.strokeStyle = "black";
+			this.screenBufferContext.font = '80px sans-serif';
+			this.screenBufferContext.fillText("Game Over", 20, 200);
+			this.screenBufferContext.strokeText("Game Over", 20, 200);
+		}
 			//display paused screen and instructions
-		if(this.paused && ! this.over){
+				if(this.paused && ! this.player.over){
 				this.screenBufferContext.fillStyle = 'rgba(255,255,255, .2)';
 				this.screenBufferContext.fillRect(0,0, this.width, this.height);
 				this.screenBufferContext.fillStyle = "white";
@@ -213,17 +221,29 @@ export default class Game{
 					this.screenBufferContext.fillText("Dash: 'R' ", 20, 470);
 					this.screenBufferContext.strokeText("Dash: 'R' ", 20, 470);
 				}
-			}
-		//GUI overlay
 		}//end if game !over
 	}// end render
 
-	nextLevel() {
+	nextLevel(){
 		this.level++;
 		this.image.src = "/levelArt/level" + this.level + ".png";
-		//console.log(this.level)
-		// call env method to change background
-		// change character location
+		this.collisionControl.addEnvironment(this.environment.nextLevel());
+		this.environment.clearObjects();
+
+		// Level handling
+		if (this.level === 2) {
+			this.player.warpToStart(100,585);
+			this.objectController.newObject('potion', 1400, 585)
+		}
+		else if (this.level === 3) {
+			this.player.warpToStart(750,560);
+		}
+		else if (this.level === 4) {
+			this.player.warpToStart(230,370);
+		}
+		else {
+			this.over = true;
+		}
 	}
 
   //game loop, updates and renders each frame

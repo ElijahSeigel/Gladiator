@@ -12,18 +12,35 @@ export default class CollisionController{
 	addEnvironment(env){
 		this.environment = env;
 	}
-	
+
 	addEnemies(enm){
 		this.enemies = enm;
 	}
-	
+
 	addPlayer(plyr){
 		this.player = plyr;
 	}
 
+	addObjects(objects){
+		this.objects = objects;
+	}
+
+	playerObjectCollides(point){
+		var id = false;
+		console.log(this.objects);
+		this.objects.forEach((object) => {
+			//console.log(object);
+			var x = object.x;
+			var y = object.y;
+			if(Math.abs(point.x - object.x) < 40 && Math.abs(point.y - object.y) < 40){
+				//console.log('grab object;');
+				id = object.properties.id;
+			}
+		});
+		return id;
+	}
+
 	playerEnvironmentCollides(point){
-		//console.log(this.environment);
-		//console.log(point);
 		var collision = false;
 		//test
 		//point = {x: 10, y: 10};
@@ -34,10 +51,9 @@ export default class CollisionController{
 				collision = true;
 			}
 		});
-		//console.log(collision);
 		return collision;
 	}
-	
+
 	playerHitsEnemy(point, dmg){
 		this.enemies.forEach((enemy)=>{
 			if(this.pointInside(point, [ enemy.position, {x:enemy.position.x + enemy.width,y: enemy.position.y},
@@ -50,11 +66,11 @@ export default class CollisionController{
 		});
 		return false;
 	}
-	
+
 	enemyHitsPlayer(point, dmg){
-		if(this.pointInside(point, [ this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
+		if(this.pointInside(point, [this.player.positionVector, {x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y},
 					{x:this.player.positionVector.x + this.player.width,y: this.player.positionVector.y + this.player.height},
-					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height} ])) {
+					{x:this.player.positionVector.x,y: this.player.positionVector.y + this.player.height}])) {
 				this.player.health -= dmg;
 				//console.log(this.player.health);
 				return true;
@@ -89,7 +105,6 @@ export default class CollisionController{
 		var oren4 = this.getOrientation(b1, b2, a2);
 
 
-		//console.log(oren1 != oren2 && oren3 != oren4);
 		if (oren1 != oren2 && oren3 != oren4) return true;
 		return false;
 
