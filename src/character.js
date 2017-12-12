@@ -24,7 +24,7 @@ export default class Character{
 		this.sprite = new Sprite('knight');
 
 		//attack variables
-		this.moves = {sword: true, lightning: false, dash: false};
+		this.moves = {jump: false, sword: true, lightning: false, dash: false};
 		this.attackAgain = 0;
 		this.dashAgain = 0;
 
@@ -56,8 +56,10 @@ export default class Character{
 				this.moves['dash'] = true;
 				break;
 			case 'lightning':
-				console.log('apply lighnitn');
 				this.moves['lightning'] = true;
+				break;
+			case 'jump':
+				this.moves['jump'] = true;
 				break;
 		}
 	}
@@ -245,7 +247,7 @@ export default class Character{
 
 		var objectCollidesId = this.collisionController.playerObjectCollides({x: this.positionVector.x - this.width/2, y: this.positionVector.y + this.height/2 + 20});
 		if(objectCollidesId){
-			//console.log(objectCollidesId);
+			console.log(objectCollidesId);
 			this.applyObject(objectCollidesId);
 		}
 	}//end update

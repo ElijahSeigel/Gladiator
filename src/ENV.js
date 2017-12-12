@@ -62,6 +62,10 @@ export default class ENV{
 		}
 	}
 
+	clearObjects() {
+		this.objectController.exists = [];
+	}
+
 	render(ctx){
 		ctx.save();
 		ctx.fillStyle = 'lime';
