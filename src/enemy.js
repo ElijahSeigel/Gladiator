@@ -15,7 +15,7 @@ export default class Enemy {
         this.movementSpeed = movementSpeed;
 		this.health = 100;
 		this.collisionController = collision;
-		this.attackAgain = 0;
+		this.attackFrames = 0;
 
         this.frames = 0;
         this.mirrored = false;
@@ -27,9 +27,15 @@ export default class Enemy {
 			var characterDistanceSquared = Math.pow((characterPosition.x - this.position.x), 2) + Math.pow((characterPosition.y - this.position.y), 2)
 			if (characterDistanceSquared < Math.pow(this.awarenessRadius, 2)) {
 				// Enemy is aware
-				if(this.attackAgain >0){this.attackAgain --;}
+				if(this.attackFrames >0){
+					this.attackFrames --;
+					if (this.attackFrames <7){
+						this.sprite.setState('walk');
+					}
+				}
 				else{
-					this.attackAgain = 7;//where 7 is the number of frames for the attack animation
+					this.attackSuccess = true;
+					this.attackFrames = 14;//where 7 is the number of frames for the attack animation
 					var point1;
 					var point2;
 					if(!this.sprite.reversed){

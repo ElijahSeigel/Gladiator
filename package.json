@@ -6,6 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+	"predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +19,9 @@
   "bugs": {
     "url": "https://github.com/ElijahSeigel/Gladiator/issues"
   },
-  "homepage": "https://github.com/ElijahSeigel/Gladiator#readme",
+  "homepage": "https://elijahseigel.github.io/Gladiator/",
   "dependencies": {
+	"gh-pages": "^1.0.0",
     "react-scripts": "^1.0.17"
   }
 }

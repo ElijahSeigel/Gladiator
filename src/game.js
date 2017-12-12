@@ -158,6 +158,7 @@ export default class Game{
 
 	//function to update the game world
   update() {
+			if(! this.player.over){
 			this.player.update(this.input);
 			//checks for end of level
 			if(this.collisionControl.pointInside(this.environment.end,[{x:this.player.positionVector.x, y:this.player.positionVector.y},{x:this.player.positionVector.x + this.player.width, y:this.player.positionVector.y},{x:this.player.positionVector.x + this.player.width, y:this.player.positionVector.y - this.player.height},{x:this.player.positionVector.x, y:this.player.positionVector.y - this.player.height}])){
@@ -165,6 +166,7 @@ export default class Game{
 			}
 			this.enemies[this.level].forEach(enemy => enemy.update(this.player.positionVector));
 			//this.environment.update(this.player.positionVector);
+			}
 
   }//end update
 
@@ -222,6 +224,17 @@ export default class Game{
 					this.screenBufferContext.strokeText("Dash: 'R' ", 20, 470);
 				}
 		}//end if game !over
+		this.screenBufferContext.save();
+		this.screenBufferContext.fillStyle = "white";
+		this.screenBufferContext.strokeStyle = "black";
+		this.screenBufferContext.font = '30px sans-serif';
+		this.screenBufferContext.fillText("Health:", 20, 640);
+		this.screenBufferContext.strokeText("Health:", 20, 640);
+		if (this.player.health >=0){
+		this.screenBufferContext.fillStyle = 'red';
+		this.screenBufferContext.fillRect(120, 622, this.player.health, 20);
+		}
+		this.screenBufferContext.restore();
 	}// end render
 
 	nextLevel(){
