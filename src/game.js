@@ -246,7 +246,6 @@ export default class Game{
 		// Level handling
 		if (this.level === 2) {
 			this.player.warpToStart(100,585);
-			this.objectController.newObject('potion', 1400, 585)
 		}
 		else if (this.level === 3) {
 			this.player.warpToStart(750,560);
