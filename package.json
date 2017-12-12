@@ -20,7 +20,7 @@
     "url": "https://github.com/ElijahSeigel/Gladiator/issues"
   },
   "homepage": "https://elijahseigel.github.io/Gladiator/",
-  "dependencies": {
+  "devDependencies": {
 	"gh-pages": "^1.0.0",
     "react-scripts": "^1.0.17"
   }
